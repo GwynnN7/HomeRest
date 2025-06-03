@@ -1,0 +1,11 @@
+@if(device != undefined) {
+  <div class="card h-100 shadow-sm" (click)="editDevice(device!.name)" style="cursor: pointer;">
+    <!-- <img [src]="getGamePicture(device!.cover.image_id)" class="card-img-top" alt="Cover of {{device!.name}}"> -->
+    <div class="card-body">
+      <h5 class="card-title">{{ device!.name }}</h5>
+      <p class="card-text">
+        <strong>{{status}}</strong>
+      </p>
+    </div>
+  </div>
+}

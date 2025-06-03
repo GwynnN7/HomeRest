@@ -1,0 +1,8 @@
+<div class="container py-4">
+  <div class="row row-cols-1 row-cols-md-3 g-4">
+    <div class="col" *ngFor="let device of devices">
+      <app-device-view [device]="device"></app-device-view>
+    </div>
+  </div>
+</div>
+

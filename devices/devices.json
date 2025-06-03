@@ -1,0 +1,41 @@
+{
+  "devices":[
+    {
+      "name": "Lamp",
+      "status": "off",
+      "actions": ["on", "off", "toggle"]
+    },
+    {
+      "name": "Fan",
+      "status": "off",
+      "actions": ["on", "off", "toggle"]
+    },
+    {
+      "name": "Computer",
+      "status": "off",
+      "actions": ["on", "off", "toggle"]
+    },
+    {
+      "name": "Heater",
+      "status": "off",
+      "actions": ["on", "off", "toggle"]
+    }
+  ],
+  "sensors": [
+    {
+      "name": "Temperature",
+      "value": "28",
+      "unit": "°C"
+    },
+    {
+      "name": "Humidity",
+      "value": "70",
+      "unit": "%"
+    },
+    {
+      "name": "Light",
+      "value": "50",
+      "unit": "%"
+    }
+  ]
+}

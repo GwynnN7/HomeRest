@@ -1,0 +1,11 @@
+@if(sensor != undefined) {
+  <div class="card h-100 shadow-sm" (click)="editSensor(sensor!.name)" style="cursor: pointer;">
+    <!-- <img [src]="getGamePicture(device!.cover.image_id)" class="card-img-top" alt="Cover of {{device!.name}}"> -->
+    <div class="card-body">
+      <h5 class="card-title">{{ sensor!.name }}</h5>
+      <p class="card-text">
+        <strong>{{value}}</strong>
+      </p>
+    </div>
+  </div>
+}
