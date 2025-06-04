@@ -1,7 +1,16 @@
-import {inject, Injectable, signal} from '@angular/core';
-import {Firestore, collection, collectionData, addDoc, getDocs, doc, getDoc} from '@angular/fire/firestore'
-import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, updateProfile, user } from '@angular/fire/auth'
-import {from, Observable} from 'rxjs';
+import {computed, inject, Injectable, signal} from '@angular/core';
+import {Firestore, doc, getDoc, setDoc, docData, addDoc, collection} from '@angular/fire/firestore'
+import {
+  Auth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  GoogleAuthProvider,
+  updateProfile,
+  user,
+  fetchSignInMethodsForEmail
+} from '@angular/fire/auth'
+import {catchError, map, Observable, of} from 'rxjs';
 import {User} from './user';
 import {DeviceInfo} from './device-info';
 
@@ -13,58 +22,80 @@ export class FirebaseService {
   auth = inject(Auth);
 
   userObservable = user(this.auth);
-  userSignal = signal<User | undefined | null>(undefined)
+  userSignal = signal<User | undefined>(undefined)
 
-  register(email: string, username:string, password: string): Observable<any> {
-    const promise = createUserWithEmailAndPassword(this.auth, email, password);
-    promise.then(response => { updateProfile(response.user, {displayName: username}).then(() => {})  })
-    return from(promise);
+  async register(email: string, password: string): Promise<any> {
+    const user = await createUserWithEmailAndPassword(this.auth, email, password);
+    await setDoc(doc(this.firestore, "devices", user.user.uid), {"devices":[], "sensors": []});
   }
 
-  login(email: string, password: string): Observable<any> {
-    const promise = signInWithEmailAndPassword(this.auth, email, password);
-    promise.then(response => {})
-    return from(promise);
+  async login(email: string, password: string): Promise<any> {
+    return signInWithEmailAndPassword(this.auth, email, password);
   }
 
-  loginWithGoogle(): Observable<any> {
-    const provider = new GoogleAuthProvider();
-    const promise = signInWithPopup(this.auth, provider);
-    promise.then(response => { })
-    return from(promise);
-  }
-
-  signOut(): Observable<any> {
-    const promise = this.auth.signOut();
-    return from(promise);
-  }
-
-  devices = collection(this.firestore, 'devices');
-  sensors = collection(this.firestore, 'sensors');
-
-  async getDevices(): Promise<DeviceInfo[]> {
-    const userDocRef = doc(this.firestore, `devices/${this.userSignal()?.email}`);
-    return getDoc(userDocRef).then((docSnap) => {
-      if (docSnap.exists()) {
-        const data = docSnap.data();
-        return data['devices'] || [];
-      } else {
-        console.warn('No such document!');
-        return [];
-      }
+  async loginWithGoogle(): Promise<any> {
+    return signInWithPopup(this.auth,  new GoogleAuthProvider).then(user => {
+      const devicesDoc = doc(this.firestore, "devices", user.user.uid);
+      getDoc(devicesDoc).then((doc) => {
+        if (doc.exists()) return;
+        setDoc(devicesDoc, {"devices": [], "sensors": []})
+      });
     });
   }
 
-  async getSensors(): Promise<DeviceInfo[]> {
-    const userDocRef = doc(this.firestore, `devices/${this.userSignal()?.email}`);
-    return getDoc(userDocRef).then((docSnap) => {
-      if (docSnap.exists()) {
-        const data = docSnap.data();
-        return data['sensors'] || [];
-      } else {
-        console.warn('No such document!');
-        return [];
+  signOut(): Promise<any> {
+    return this.auth.signOut();
+  }
+
+  readonly userId = computed(() => this.userSignal()?.uid ?? null);
+
+  getDevices(category: string): Observable<DeviceInfo[]> {
+    if(!this.userId) return of([]);
+
+    const documentReference = doc(this.firestore, `devices/${this.userId()}`);
+    return docData(documentReference).pipe(
+      map(docData => (docData && docData[category]) ? docData[category] : []),
+      catchError(_ => of([]))
+    );
+  }
+
+  async addDevice(newDevice: DeviceInfo, category: string, edit: boolean): Promise<boolean> {
+    if(!this.userId) return false;
+
+    const documentReference = doc(this.firestore, `devices/${this.userId()}`);
+    return getDoc(documentReference).then((documentSnapshot) => {
+      if (!documentSnapshot.exists()) return false;
+
+      const data = documentSnapshot.data();
+      const index = data[category].findIndex((device: DeviceInfo) => device.id === newDevice.id);
+      if(index != -1 && data[category].length > 0)
+      {
+        if(!edit) return false;
+        data[category][index] = newDevice;
       }
-    });
+      else data[category].push(newDevice);
+      return setDoc(documentReference, data)
+        .then(_ => true)
+        .catch(_ => false)
+
+    }).catch(_ => false)
+  }
+
+  async deleteDevice(selectedDevice: DeviceInfo, category: string): Promise<boolean> {
+    if(!this.userId) return false;
+
+    const documentReference = doc(this.firestore, `devices/${this.userId()}`);
+    return getDoc(documentReference).then((documentSnapshot) => {
+      if (!documentSnapshot.exists())  return false;
+
+      const data = documentSnapshot.data();
+      const newData = data[category].filter((device: DeviceInfo) => device.id !== selectedDevice.id);
+      if(newData.length === data[category].length) return false;
+      data[category] = newData;
+      return setDoc(documentReference, data)
+        .then(_ => true)
+        .catch(_ => false);
+
+    }).catch(_ => false);
   }
 }

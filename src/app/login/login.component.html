@@ -1,4 +1,4 @@
-@if (this.firebaseService.userSignal() == null || this.firebaseService.userSignal() == undefined) {
+@if (!this.firebaseService.userSignal()) {
   <div class="container py-5">
     <div class="row justify-content-center">
       <div class="col-md-6">
@@ -18,21 +18,21 @@
               </div>
 
               <div class="d-grid">
-                <button type="button" class="btn btn-primary" (click)="login()">Login</button>
+                <button type="button" class="btn btn-primary" (click)="login()" [disabled]="!loginForm.valid">Login</button>
               </div>
 
               <p class="mt-3 mb-0 text-center">
                 Don't have an account?
                 <a href="/register">Register here</a>
               </p>
+              <div class="mt-3 mb-2 text-center">
+                <button class="btn btn-primary" (click)="google()">Login with Google</button>
+              </div>
+
             </form>
           </div>
         </div>
       </div>
     </div>
   </div>
-}
-
-@if(errorMessage) {
-  <div>{{errorMessage}}</div>
 }

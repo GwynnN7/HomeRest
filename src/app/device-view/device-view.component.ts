@@ -1,25 +1,38 @@
-import {Component, inject, Input, OnChanges, OnInit} from '@angular/core';
+import {Component, inject, Input, OnInit} from '@angular/core';
 import {DeviceInfo} from '../device-info';
 import {DeviceCallerService} from '../device-caller.service';
+import {NgClass, NgForOf} from '@angular/common';
+import * as devicesIcons from '../../../devices/icons.json'
+
 @Component({
   selector: 'app-device-view',
-  imports: [],
+  imports: [
+    NgForOf,
+    NgClass
+  ],
   templateUrl: './device-view.component.html',
   styleUrl: './device-view.component.css'
 })
-export class DeviceViewComponent implements OnChanges{
+export class DeviceViewComponent implements OnInit{
   @Input() device: DeviceInfo | undefined;
+
   deviceCaller = inject(DeviceCallerService)
 
+  iconListOn: string[] = devicesIcons['switch_on'];
+  iconListOff: string[] = devicesIcons['switch_off'];
+  iconListNeutral: string[] = devicesIcons['neutral'];
   status: string = "";
 
-  ngOnChanges(): void {
+  ngOnInit(): void {
     this.deviceCaller.getDevice(this.device!.endpoint).subscribe(device => {
-      this.status = `${device.device} is ${device.status}`;
+      this.status = device.status;
     })
   }
 
-  editDevice(id: string) {
-
+  callDeviceEndpoint(action: string, $event: MouseEvent): void {
+    this.deviceCaller.postDevice(this.device!.endpoint, action).subscribe(device => {
+      this.status = device.status;
+    })
+    $event.stopPropagation();
   }
 }

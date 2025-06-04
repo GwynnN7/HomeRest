@@ -20,31 +20,22 @@ export class LoginComponent {
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required]),
   })
-  errorMessage: string | null = null;
 
   login(): void {
     this.firebaseService.login(this.loginForm.value.email!, this.loginForm.value.password!)
-      .subscribe({
-        next: result => {
-          this.errorMessage = null;
-          this.router.navigateByUrl('/')
-        },
-        error: error => {
-          this.errorMessage = error.code;
-        }
-      })
+      .then(_ => {
+        this.router.navigateByUrl('/devices');
+      }).catch(error => {
+          alert(error.code);
+    });
   }
 
   google(): void {
     this.firebaseService.loginWithGoogle()
-      .subscribe({
-        next: result => {
-          this.errorMessage = null;
-          this.router.navigateByUrl('/')
-        },
-        error: error => {
-          this.errorMessage = error.code;
-        }
-      })
+      .then(_ => {
+        this.router.navigateByUrl("/devices");
+      }).catch(error => {
+          alert(error.code);
+    });
   }
 }

@@ -1,30 +1,28 @@
 import {Component, inject, OnInit} from '@angular/core';
-import {Router, RouterOutlet} from '@angular/router';
 import {FirebaseService} from './firebase.service';
 import {SideBarComponent} from './side-bar/side-bar.component';
+import {RouterOutlet} from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, SideBarComponent],
+  imports: [SideBarComponent, RouterOutlet],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent implements OnInit {
-  title = 'home-rest';
   firebaseService = inject(FirebaseService);
-  router = inject(Router);
   ngOnInit(): void {
     this.firebaseService.userObservable.subscribe(user => {
       if (user) {
         this.firebaseService.userSignal.set({
+          uid: user.uid!,
           email: user.email!,
-          username: user.displayName!,
-        })
-        this.router.navigateByUrl('/')
+          username: user.displayName ?? ''
+        });
       }
       else{
-        this.firebaseService.userSignal.set(null)
+        this.firebaseService.userSignal.set(undefined);
       }
-    })
+    });
   }
 }

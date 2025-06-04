@@ -1,33 +1,33 @@
 <div class="modal-content bg-dark text-white" data-bs-theme="dark">
   <div class="modal-header">
     <h5 class="modal-title" id="addDeviceModalLabel">
-      @if(selectedDevice == undefined){
-        Add Device
+      @if(selectedSensor == undefined){
+        Add Sensor
       } @else {
-        Edit Device
+        Edit Sensor
       }</h5>
     <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss()"></button>
   </div>
   <div class="modal-body">
-    <form [formGroup]="deviceForm">
+    <form [formGroup]="sensorForm">
       <div class="mb-3">
-        <label for="deviceName" class="form-label">Device Name</label>
-        <input type="text" formControlName="name" class="form-control" id="deviceName" name="name">
+        <label for="sensorName" class="form-label">Sensor Name</label>
+        <input type="text" formControlName="name" class="form-control" id="sensorName" name="name">
       </div>
       <div class="mb-3">
-        <label for="deviceEndpoint" class="form-label">Endpoint</label>
-        <input type="text" formControlName="endpoint" class="form-control" id="deviceEndpoint" name="endpoint">
+        <label for="sensorEndpoint" class="form-label">Endpoint</label>
+        <input type="text" formControlName="endpoint" class="form-control" id="sensorEndpoint" name="endpoint">
       </div>
       <div class="mb-3">
-        <label for="deviceType" class="form-label">Type</label>
-        <select class="form-select" id="deviceType" formControlName="type" name="type" #type (input)="selectedIconIndex=0">
-          <option value="switch">Switch</option>
-          <option value="level">Level</option>
+        <label for="sensorType" class="form-label">Type</label>
+        <select class="form-select" id="sensorType" formControlName="type" name="type" #type (input)="selectedIconIndex=0">
+          <option value="digital">Digital</option>
+          <option value="analog">Analog</option>
         </select>
       </div>
     </form>
-    @if(type.value === "switch") {
-      <div  *ngFor="let iconList of [iconListOn, iconListOff]">
+    @if(type.value === "digital") {
+      <div *ngFor="let iconList of [iconListOn, iconListOff]">
         <div class="d-flex flex-wrap gap-2 justify-content-center align-items-center">
           <i style="font-size: 1.75rem; cursor: pointer;"
              *ngFor="let icon of iconList"
@@ -39,7 +39,7 @@
       </div>
     }
     @else{
-      <div class="text-center flex" >
+      <div>
         <div class="d-flex flex-wrap gap-2 justify-content-center align-items-center">
           <i style="font-size: 2rem; cursor: pointer;"
              *ngFor="let icon of iconListNeutral"
@@ -50,15 +50,13 @@
         </div>
       </div>
     }
-
-
   </div>
 
   <div class="modal-footer">
     <button type="button" class="btn btn-secondary" (click)="activeModal.dismiss()">Cancel</button>
-    <button type="button" *ngIf="selectedDevice != undefined" class="btn btn-danger" (click)="deleteDevice()">Delete</button>
-    <button type="button" class="btn btn-primary" (click)="addDevice()" [disabled]="!deviceForm.valid">
-      @if(selectedDevice == undefined){
+    <button type="button" *ngIf="selectedSensor != undefined" class="btn btn-danger" (click)="deleteSensor()">Delete</button>
+    <button type="button" class="btn btn-primary" (click)="addSensor()" [disabled]="!sensorForm.valid">
+      @if(selectedSensor == undefined){
         Add
       } @else {
         Edit

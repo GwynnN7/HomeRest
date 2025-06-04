@@ -1,11 +1,13 @@
 @if(sensor != undefined) {
-  <div class="card h-100 shadow-sm" (click)="editSensor(sensor!.name)" style="cursor: pointer;">
-    <!-- <img [src]="getGamePicture(device!.cover.image_id)" class="card-img-top" alt="Cover of {{device!.name}}"> -->
-    <div class="card-body">
-      <h5 class="card-title">{{ sensor!.name }}</h5>
-      <p class="card-text">
-        <strong>{{value}}</strong>
-      </p>
+  <div class="card h-100 d-flex flex-column justify-content-center align-items-center p-3">
+    <h4 class="fw-bold mb-1" style="font-family: 'Segoe UI', sans-serif;">{{ sensor.name }}</h4>
+    <div class="d-flex justify-content-center align-items-center gap-2 mt-2">
+      @if(sensor.type === "digital"){
+      <i class="bi" [ngClass]="status === 'true' ? iconListOn[sensor.iconId] + ' text-warning' : iconListOff[sensor.iconId] + ' text-secondary'" style="font-size: 2.5rem;"></i>
+      } @else {
+        <i [class]="'text-warning bi ' + iconListNeutral[sensor.iconId]" style="font-size: 2.5rem;"></i>
+        <span class="fs-5">{{ status + unit }}</span>
+      }
     </div>
   </div>
 }

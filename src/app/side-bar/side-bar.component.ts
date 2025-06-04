@@ -14,6 +14,8 @@ export class SideBarComponent {
   router = inject(Router);
   firebaseService = inject(FirebaseService);
   signOut(): void {
-    this.firebaseService.signOut().subscribe(() => {this.router.navigateByUrl('/login')})
+    this.firebaseService.signOut().then(() => {
+      this.router.navigateByUrl('/login');
+    })
   }
 }

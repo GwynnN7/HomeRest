@@ -17,20 +17,16 @@ export class RegistrationComponent {
 
   registrationForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
-    username: new FormControl('',  [Validators.required]),
     password: new FormControl('', [Validators.required])
   })
-  errorMessage: string | null = null;
+
   register(): void {
-    this.firebaseService.register(this.registrationForm.value.email!, this.registrationForm.value.username!, this.registrationForm.value.password!)
-      .subscribe({
-        next: result => {
-          this.errorMessage = null;
-          this.router.navigateByUrl('/');
-        },
-        error: error => {
-          this.errorMessage = error.code;
-        }
+    this.firebaseService.register(this.registrationForm.value.email!, this.registrationForm.value.password!)
+      .then(_ => {
+        this.router.navigateByUrl('/devices');
       })
+      .catch(error => {
+        alert(error.code);
+    });
   }
 }

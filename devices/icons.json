@@ -1,0 +1,48 @@
+{
+  "switch_on": [
+    "bi-toggle-on",
+    "bi-lightbulb",
+    "bi-lightbulb-fill",
+    "bi-pc-display",
+    "bi-plug-fill",
+    "bi-lightning-charge-fill",
+    "bi-lightning-fill",
+    "bi-moon-fill",
+    "bi-eye",
+    "bi-lock",
+    "bi-wifi",
+    "bi-volume-up",
+    "bi-power",
+    "bi-outlet"
+  ],
+  "switch_off": [
+    "bi-toggle-off",
+    "bi-lightbulb-off",
+    "bi-lightbulb-off-fill",
+    "bi-pc",
+    "bi-plug",
+    "bi-lightning-charge",
+    "bi-lightning",
+    "bi-moon",
+    "bi-eye-slash",
+    "bi-unlock",
+    "bi-wifi-off",
+    "bi-volume-mute",
+    "bi-power",
+    "bi-outlet"
+  ],
+  "neutral": [
+    "bi-power",
+    "bi-thermometer-high",
+    "bi-fan",
+    "bi-speedometer",
+    "bi-droplet",
+    "bi-lightbulb",
+    "bi-broadcast-pin",
+    "bi-camera-video",
+    "bi-door-closed",
+    "bi-plug",
+    "bi-cloud",
+    "bi-house"
+  ]
+}

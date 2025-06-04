@@ -1,26 +1,31 @@
-import {Component, inject, Input, OnChanges, OnInit} from '@angular/core';
+import {Component, inject, Input, OnInit} from '@angular/core';
 import {DeviceInfo} from '../device-info';
 import {DeviceCallerService} from '../device-caller.service';
-
+import * as devicesIcons from '../../../devices/icons.json';
+import {NgClass, NgForOf} from '@angular/common';
 @Component({
   selector: 'app-sensor-view',
-  imports: [],
+  imports: [
+    NgClass
+  ],
   templateUrl: './sensor-view.component.html',
   styleUrl: './sensor-view.component.css'
 })
-export class SensorViewComponent implements OnChanges {
-  @Input() sensor: DeviceInfo | undefined;
+export class SensorViewComponent implements OnInit {
+  @Input() sensor!: DeviceInfo;
+
   deviceCaller = inject(DeviceCallerService)
 
-  value: string = "";
+  iconListOn: string[] = devicesIcons['switch_on'];
+  iconListOff: string[] = devicesIcons['switch_off'];
+  iconListNeutral: string[] = devicesIcons['neutral'];
+  status: string = "";
+  unit: string = "";
 
-  ngOnChanges(): void {
-    this.deviceCaller.getSensor(this.sensor!.endpoint).subscribe(device => {
-      this.value = `${device.sensor}: ${device.value}${device.unit}`;
+  ngOnInit(): void {
+    this.deviceCaller.getSensor(this.sensor!.endpoint).subscribe(sensor => {
+      this.status = sensor.value;
+      this.unit = sensor.unit;
     })
-  }
-
-  editSensor(id: string) {
-
   }
 }

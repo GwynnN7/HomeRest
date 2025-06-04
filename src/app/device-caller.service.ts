@@ -1,5 +1,5 @@
 import {inject, Injectable} from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {DeviceResponse} from './device-response';
 import {SensorResponse} from './sensor-response';
@@ -10,8 +10,6 @@ import {SensorResponse} from './sensor-response';
 export class DeviceCallerService {
   httpClient: HttpClient = inject(HttpClient);
 
-  constructor() {}
-
   getDevice(url: string): Observable<DeviceResponse> {
     return this.httpClient.get<DeviceResponse>(url);
   }
@@ -20,7 +18,7 @@ export class DeviceCallerService {
     return this.httpClient.get<SensorResponse>(url);
   }
 
-  postDevice(url: string): Observable<DeviceResponse> {
-    return this.httpClient.post<DeviceResponse>(url, null);
+  postDevice(url: string, action: string): Observable<DeviceResponse> {
+    return this.httpClient.post<DeviceResponse>(url, {action: action}, {headers: {'Content-Type': 'application/json'}});
   }
 }

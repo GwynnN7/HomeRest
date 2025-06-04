@@ -44,7 +44,7 @@ app.post('/devices/:name', (req, res) => {
   }
 
   if(action === "toggle") device.status = device.status === 'on' ? 'off' : 'on';
-  else device.status = action === 'on' ? 'on' : 'off';
+  else device.status = action;
   res.json({ device: device.name, status: device.status });
 });
 

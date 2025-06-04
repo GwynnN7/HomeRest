@@ -7,8 +7,8 @@
     },
     {
       "name": "Fan",
-      "status": "off",
-      "actions": ["on", "off", "toggle"]
+      "status": "0",
+      "actions": ["0", "1", "2", "3"]
     },
     {
       "name": "Computer",
@@ -36,6 +36,16 @@
       "name": "Light",
       "value": "50",
       "unit": "%"
+    },
+    {
+      "name": "Motion",
+      "value": "false",
+      "unit": ""
+    },
+    {
+      "name": "Fire",
+      "value": "false",
+      "unit": ""
     }
   ]
 }
