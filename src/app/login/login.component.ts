@@ -24,7 +24,7 @@ export class LoginComponent {
   login(): void {
     this.firebaseService.login(this.loginForm.value.email!, this.loginForm.value.password!)
       .then(_ => {
-        this.router.navigateByUrl('/devices');
+        this.router.navigateByUrl('/');
       }).catch(error => {
           alert(error.code);
     });

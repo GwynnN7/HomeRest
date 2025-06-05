@@ -8,12 +8,23 @@ app.use(cors());
 app.use(express.json());
 
 const loadDevices = () => {
-  const data = fs.readFileSync('devices/devices.json');
-  return JSON.parse(data);
+  return JSON.parse(fs.readFileSync('devices/devices.json'));
 };
 
-const devices = loadDevices();
+const writeDevices = () => {
+  fs.writeFileSync('devices/devices.json', JSON.stringify(devices, null, 4));
+}
 
+let devices = {}
+
+app.use((req, res, next) => {
+  try {
+    devices = loadDevices();
+    next();
+  } catch (err) {
+    res.sendStatus(500);
+  }
+});
 app.get('/devices', (req, res) => {
   res.json(devices.devices);
 });
@@ -46,6 +57,7 @@ app.post('/devices/:name', (req, res) => {
   if(action === "toggle") device.status = device.status === 'on' ? 'off' : 'on';
   else device.status = action;
   res.json({ device: device.name, status: device.status });
+  writeDevices()
 });
 
 app.listen(port, () => {

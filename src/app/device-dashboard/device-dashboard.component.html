@@ -4,12 +4,14 @@
       <app-device-view [device]="device" (click)="openEditModal(device)"></app-device-view>
     </div>
 
+    @if (this.router.url != '/') {
     <div class="col">
       <div class="card h-100 d-flex flex-column justify-content-center align-items-center p-3" style="cursor: pointer;"  (click)="openAddModal()">
         <div class="display-4 text-primary">+</div>
         <p class="mt-2">Add Device</p>
       </div>
     </div>
+    }
   </div>
 </div>
 

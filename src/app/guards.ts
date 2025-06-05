@@ -30,3 +30,11 @@ export const noAuthGuard: CanActivateFn = (route, state) => {
     })
   );
 };
+
+export const offlineGuard: CanActivateFn = (route, state) => {
+  return !navigator.onLine
+};
+
+export const onlineGuard: CanActivateFn = (route, state) => {
+  return navigator.onLine
+};

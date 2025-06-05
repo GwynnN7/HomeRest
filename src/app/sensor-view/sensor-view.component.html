@@ -3,9 +3,9 @@
     <h4 class="fw-bold mb-1" style="font-family: 'Segoe UI', sans-serif;">{{ sensor.name }}</h4>
     <div class="d-flex justify-content-center align-items-center gap-2 mt-2">
       @if(sensor.type === "digital"){
-      <i class="bi" [ngClass]="status === 'true' ? iconListOn[sensor.iconId] + ' text-warning' : iconListOff[sensor.iconId] + ' text-secondary'" style="font-size: 2.5rem;"></i>
+      <i class="bi" [ngClass]="status === 'true' ? iconListOn[sensor.iconId] + ' text-info' : iconListOff[sensor.iconId] + ' text-secondary'" style="font-size: 2.5rem;"></i>
       } @else {
-        <i [class]="'text-warning bi ' + iconListNeutral[sensor.iconId]" style="font-size: 2.5rem;"></i>
+        <i [class]="'text-info bi ' + iconListNeutral[sensor.iconId]" style="font-size: 2.5rem;"></i>
         <span class="fs-5">{{ status + unit }}</span>
       }
     </div>

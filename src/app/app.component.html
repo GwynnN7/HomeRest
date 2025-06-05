@@ -1,5 +1,8 @@
 <div data-bs-theme="dark" class="container-fluid bg-dark text-white min-vh-100">
   <div class="container-fluid">
+    <div *ngIf="!isOnline" class="alert alert-warning">
+      ⚠️ You are offline, connect to internet to load your devices!
+    </div>
     <div class="row">
       <div class="col-lg-2">
         <app-side-bar></app-side-bar>

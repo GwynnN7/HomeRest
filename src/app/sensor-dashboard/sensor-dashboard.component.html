@@ -4,12 +4,14 @@
       <app-sensor-view [sensor]="sensor" (click)="openEditModal(sensor)"></app-sensor-view>
     </div>
 
-    <div class="col">
-      <div class="card h-100 d-flex flex-column justify-content-center align-items-center p-3" style="cursor: pointer;"  (click)="openAddModal()">
-        <div class="display-4 text-primary">+</div>
-        <p class="mt-2">Add Sensor</p>
+    @if (this.router.url != '/') {
+      <div class="col">
+        <div class="card h-100 d-flex flex-column justify-content-center align-items-center p-3" style="cursor: pointer;"  (click)="openAddModal()">
+          <div class="display-4 text-primary">+</div>
+          <p class="mt-2">Add Sensor</p>
+        </div>
       </div>
-    </div>
+    }
   </div>
 </div>
 

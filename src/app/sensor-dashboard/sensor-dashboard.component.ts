@@ -5,6 +5,7 @@ import {NgForOf} from '@angular/common';
 import {SensorViewComponent} from '../sensor-view/sensor-view.component';
 import {SensorEditorComponent} from '../sensor-editor/sensor-editor.component';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-sensor-dashboard',
@@ -17,6 +18,7 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 })
 export class SensorDashboardComponent implements OnInit{
   modalService = inject(NgbModal);
+  router: Router = inject(Router);
   firebaseService: FirebaseService = inject(FirebaseService);
   sensors: DeviceInfo[] = [];
 

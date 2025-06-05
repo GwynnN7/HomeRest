@@ -5,6 +5,7 @@ import {NgForOf} from '@angular/common';
 import {DeviceInfo} from '../device-info';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {DeviceEditorComponent} from '../device-editor/device-editor.component';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-device-dashboard',
@@ -17,7 +18,9 @@ import {DeviceEditorComponent} from '../device-editor/device-editor.component';
 })
 export class DeviceDashboardComponent implements OnInit {
   modalService = inject(NgbModal);
+  router: Router = inject(Router);
   firebaseService: FirebaseService = inject(FirebaseService);
+
   devices: DeviceInfo[] = [];
 
   ngOnInit(): void {

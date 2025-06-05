@@ -17,13 +17,14 @@ export class RegistrationComponent {
 
   registrationForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
+    username: new FormControl(''),
     password: new FormControl('', [Validators.required])
   })
 
   register(): void {
-    this.firebaseService.register(this.registrationForm.value.email!, this.registrationForm.value.password!)
+    this.firebaseService.register(this.registrationForm.value.email!, this.registrationForm.value.username!, this.registrationForm.value.password!)
       .then(_ => {
-        this.router.navigateByUrl('/devices');
+        this.router.navigateByUrl('/');
       })
       .catch(error => {
         alert(error.code);

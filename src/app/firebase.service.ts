@@ -1,5 +1,5 @@
 import {computed, inject, Injectable, signal} from '@angular/core';
-import {Firestore, doc, getDoc, setDoc, docData, addDoc, collection} from '@angular/fire/firestore'
+import {Firestore, doc, getDoc, setDoc, docData} from '@angular/fire/firestore'
 import {
   Auth,
   createUserWithEmailAndPassword,
@@ -8,10 +8,9 @@ import {
   GoogleAuthProvider,
   updateProfile,
   user,
-  fetchSignInMethodsForEmail
+  User
 } from '@angular/fire/auth'
 import {catchError, map, Observable, of} from 'rxjs';
-import {User} from './user';
 import {DeviceInfo} from './device-info';
 
 @Injectable({
@@ -24,9 +23,25 @@ export class FirebaseService {
   userObservable = user(this.auth);
   userSignal = signal<User | undefined>(undefined)
 
-  async register(email: string, password: string): Promise<any> {
+  updateUser() {
+    this.userObservable.subscribe(user => {
+      this.updateUserSignal(user);
+    });
+  }
+
+  private updateUserSignal(user: User | null) {
+    if (user) {
+      this.userSignal.set(user);
+    }
+    else{
+      this.userSignal.set(undefined);
+    }
+  }
+
+  async register(email: string, username: string, password: string): Promise<any> {
     const user = await createUserWithEmailAndPassword(this.auth, email, password);
     await setDoc(doc(this.firestore, "devices", user.user.uid), {"devices":[], "sensors": []});
+    await this.updateUsername(username);
   }
 
   async login(email: string, password: string): Promise<any> {
@@ -41,6 +56,17 @@ export class FirebaseService {
         setDoc(devicesDoc, {"devices": [], "sensors": []})
       });
     });
+  }
+
+  async updateUsername(username: string): Promise<void> {
+    const user = this.auth.currentUser;
+    if (!user) return;
+
+    await updateProfile(user, { displayName: username });
+    await user.reload();
+
+    // Ensure you're calling currentUser *again* after reload
+    this.userSignal.set(this.auth.currentUser!);
   }
 
   signOut(): Promise<any> {
