@@ -2,7 +2,7 @@
     "devices": [
         {
             "name": "Lamp",
-            "status": "off",
+            "status": "on",
             "actions": [
                 "on",
                 "off",
@@ -11,7 +11,7 @@
         },
         {
             "name": "Fan",
-            "status": "2",
+            "status": "1",
             "actions": [
                 "0",
                 "1",

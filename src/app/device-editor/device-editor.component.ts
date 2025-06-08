@@ -20,6 +20,7 @@ import * as devicesIcons from '../../../devices/icons.json'
 })
 export class DeviceEditorComponent implements OnInit {
   @Input() selectedDevice: DeviceInfo | undefined;
+  @Input() category!: string;
 
   firebaseService: FirebaseService = inject(FirebaseService);
   activeModal = inject(NgbActiveModal)
@@ -32,7 +33,7 @@ export class DeviceEditorComponent implements OnInit {
   deviceForm: FormGroup = new FormGroup({
     name: new FormControl('', [Validators.required]),
     endpoint: new FormControl('', [Validators.required]),
-    type: new FormControl('switch', [Validators.required]),
+    type: new FormControl('digital', [Validators.required]),
   })
 
   ngOnInit(): void {
@@ -62,7 +63,7 @@ export class DeviceEditorComponent implements OnInit {
       iconId: this.selectedIconIndex
     };
 
-    this.firebaseService.addDevice(newDevice, "devices", editMode).then( result => {
+    this.firebaseService.addDevice(newDevice, this.category, editMode).then( result => {
         if(result) this.activeModal.close();
         else alert("There was an error while creating the device.");
       }
@@ -75,7 +76,7 @@ export class DeviceEditorComponent implements OnInit {
       this.activeModal.dismiss();
       return;
     }
-    this.firebaseService.deleteDevice(this.selectedDevice!, "devices").then( result => {
+    this.firebaseService.deleteDevice(this.selectedDevice!, this.category).then( result => {
       if(result) this.activeModal.close();
       else{
         alert("There was an error while deleting the device.");

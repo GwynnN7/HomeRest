@@ -3,9 +3,9 @@ import {FirebaseService} from '../firebase.service';
 import {DeviceInfo} from '../device-info';
 import {NgForOf} from '@angular/common';
 import {SensorViewComponent} from '../sensor-view/sensor-view.component';
-import {SensorEditorComponent} from '../sensor-editor/sensor-editor.component';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {Router} from '@angular/router';
+import {DeviceEditorComponent} from '../device-editor/device-editor.component';
 
 @Component({
   selector: 'app-sensor-dashboard',
@@ -29,15 +29,16 @@ export class SensorDashboardComponent implements OnInit{
   }
 
   openAddModal() {
-    this.modalService.open(SensorEditorComponent, {
+    this.modalService.open(DeviceEditorComponent, {
       size: 'lg'
-    });
+    }).componentInstance.category = "sensors";
   }
 
   openEditModal(sensor: DeviceInfo) {
-    const editorModal = this.modalService.open(SensorEditorComponent, {
+    const editorModal = this.modalService.open(DeviceEditorComponent, {
       size: 'lg'
     });
-    editorModal.componentInstance.selectedSensor = sensor;
+    editorModal.componentInstance.selectedDevice = sensor;
+    editorModal.componentInstance.category = "sensors";
   }
 }

@@ -1,4 +1,4 @@
-import {Component, effect, inject, OnInit} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {FirebaseService} from '../firebase.service';
 import {DeviceViewComponent} from '../device-view/device-view.component';
 import {NgForOf} from '@angular/common';
@@ -31,7 +31,7 @@ export class DeviceDashboardComponent implements OnInit {
   openAddModal() {
     this.modalService.open(DeviceEditorComponent, {
       size: 'lg'
-    });
+    }).componentInstance.category = "devices";
   }
 
   openEditModal(device: DeviceInfo): void{
@@ -39,5 +39,6 @@ export class DeviceDashboardComponent implements OnInit {
       size: 'lg'
     });
     editorModal.componentInstance.selectedDevice = device;
+    editorModal.componentInstance.category = "devices";
   }
 }

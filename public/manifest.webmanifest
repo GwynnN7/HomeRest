@@ -1,6 +1,6 @@
 {
-  "name": "home-rest",
-  "short_name": "home-rest",
+  "name": "HomeRest",
+  "short_name": "HomeRest",
   "display": "standalone",
   "scope": "./",
   "start_url": "./",

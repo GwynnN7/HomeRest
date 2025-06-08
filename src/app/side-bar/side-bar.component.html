@@ -1,29 +1,36 @@
 <nav class="collapse d-lg-block sidebar bg-dark">
   <div class="position-sticky">
-    <div class="text-center py-4 border-bottom">
+    <div class="text-center py-4 border-bottom" style="overflow-x: hidden; white-space: wrap;">
       @if ((this.firebaseService.userSignal()?.displayName ?? '') !== '') {
         <h4 class="fw-bold">{{ this.firebaseService.userSignal()?.displayName }}'s Home</h4>
       } @else{
         <h4 class="fw-bold">Home Rest</h4>
       }
     </div>
-    <div class="list-group list-group-flush mx-3 mt-3">
-      <a routerLink="/" class="list-group-item list-group-item-action bg-dark border-0 py-3 ripple">
+    <div class="list-group list-group-flush mx-2 mt-3 pb-2 border-bottom">
+      <a routerLink="/" class="list-group-item list-group-item-action bg-dark border-0 py-3 ripple"
+         [ngClass]="this.router.url == '/' ? 'active' : ''">
         <i class="bi bi-house me-3"></i> Dashboard
       </a>
-      <a routerLink="/devices" class="list-group-item list-group-item-action bg-dark border-0 py-3 ripple">
+      <a routerLink="/devices" class="list-group-item list-group-item-action bg-dark border-0 py-3 ripple"
+         [ngClass]="this.router.url == '/devices' ? 'active' : ''">
         <i class="bi bi-lightbulb-fill me-3"></i> Devices
       </a>
-      <a routerLink="/sensors" class="list-group-item list-group-item-action bg-dark border-0 py-3 ripple">
+      <a routerLink="/sensors" class="list-group-item list-group-item-action bg-dark border-0 py-3 ripple"
+         [ngClass]="this.router.url == '/sensors' ? 'active' : ''">
         <i class="bi bi-thermometer-high me-3"></i> Sensors
       </a>
-      <hr class="bg-white">
+
+    </div>
+    <div class="list-group list-group-flush mx-2 mt-3">
       @if(this.firebaseService.userSignal()){
-        <a routerLink="/account" class="list-group-item list-group-item-action bg-dark border-0 py-3 ripple" >
+        <a routerLink="/account" class="list-group-item list-group-item-action bg-dark border-0 py-3 ripple"
+           [ngClass]="this.router.url == '/account' ? 'active' : ''">
           <i class="bi bi-gear me-3"></i> Account
         </a>
       } @else{
-        <a routerLink="/login" class="list-group-item list-group-item-action bg-dark border-0 py-3 ripple">
+        <a routerLink="/login" class="list-group-item list-group-item-action bg-dark border-0 py-3 ripple"
+           [ngClass]="this.router.url == '/' ? 'login' : ''">
           <i class="bi bi-gear me-3"></i> Login
         </a>
       }

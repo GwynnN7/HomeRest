@@ -1,18 +1,21 @@
 @if(device != undefined) {
-  @if(device.type === "switch"){
+  @if(device.type === "digital"){
     <div class="card h-100 d-flex flex-column justify-content-center align-items-center p-3">
       <h4 class="fw-bold mb-1" style="font-family: 'Segoe UI', sans-serif;">{{ device.name }}</h4>
       <div class="mb-1">
-        <i class="bi" [ngClass]="status === 'on' ? iconListOn[device.iconId] + ' text-warning' : iconListOff[device.iconId] + ' text-secondary'" style="font-size: 2rem;"></i>
+        <i class="bi"
+           [ngClass]="apiStatus === 2 ? (status === 'on' ? iconListOn[device.iconId] + ' text-warning' : iconListOff[device.iconId] + ' text-secondary') : iconListErrors[apiStatus] + ' text-danger'"
+           style="font-size: 2rem;"
+        ></i>
       </div>
       <div class="d-flex justify-content-center gap-2 mt-2">
-        <button class="btn btn-outline-success d-flex align-items-center gap-1" (click)="callDeviceEndpoint('on', $event)">
+        <button class="btn btn-outline-success d-flex align-items-center gap-1" (click)="callDeviceEndpoint('on', $event)" [disabled]="apiStatus !== 2">
           <i class="bi bi-toggle-on"></i> On
         </button>
-        <button class="btn btn-outline-light d-flex align-items-center gap-1" (click)="callDeviceEndpoint('toggle', $event)">
+        <button class="btn btn-outline-light d-flex align-items-center gap-1" (click)="callDeviceEndpoint('toggle', $event)" [disabled]="apiStatus !== 2">
           <i class="bi bi-arrow-repeat"></i> Toggle
         </button>
-        <button class="btn btn-outline-danger d-flex align-items-center gap-1" (click)="callDeviceEndpoint('off', $event)">
+        <button class="btn btn-outline-danger d-flex align-items-center gap-1" (click)="callDeviceEndpoint('off', $event)" [disabled]="apiStatus !== 2">
           <i class="bi bi-toggle-off"></i> Off
         </button>
 
@@ -22,17 +25,18 @@
     <div class="card h-100 d-flex flex-column justify-content-center align-items-center p-3">
       <h4 class="fw-bold mb-1" style="font-family: 'Segoe UI', sans-serif;">{{ device.name }}</h4>
       <div class="mb-1">
-        <i [class]="'bi ' + iconListNeutral[device.iconId]" style="font-size: 2rem;"
-           [ngClass]="{
-            'text-secondary': status === '0',
-            'text-success': status === '1',
-            'text-warning': status === '2',
-            'text-danger': status === '3'
-            }"
+        <i class="bi" style="font-size: 2rem;"
+           [ngClass]="[
+           apiStatus === 2 ? iconListNeutral[device.iconId] : iconListErrors[apiStatus] + ' text-danger',
+           status === '0' ? 'text-secondary' : '',
+           status === '1' ? 'text-success' : '',
+           status === '2' ? 'text-warning' : '',
+           status === '3' ? 'text-danger' : ''
+           ]"
         ></i>
       </div>
       <div class="d-flex justify-content-center gap-2 flex-wrap">
-        <button class="btn" *ngFor="let level of ['0', '1', '2', '3']" (click)="callDeviceEndpoint(level, $event)"
+        <button class="btn" *ngFor="let level of ['0', '1', '2', '3']" (click)="callDeviceEndpoint(level, $event)" [disabled]="apiStatus !== 2"
           [ngClass]="{
           'btn-outline-light': level === '0',
           'btn-outline-success': level === '1',

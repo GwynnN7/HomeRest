@@ -20,18 +20,20 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationStart) {
-        this.modalService.dismissAll(); // dismiss all modals on route change
+        this.modalService.dismissAll();
       }
     });
     window.addEventListener('online', () => {
       if(this.router.url.includes('offline')) {
         this.router.navigateByUrl('/');
+        this.isOnline = true;
       }
     });
 
     window.addEventListener('offline', () => {
       if(!this.router.url.includes('offline')) {
         this.router.navigateByUrl('/offline');
+        this.isOnline = false;
       }
     });
 

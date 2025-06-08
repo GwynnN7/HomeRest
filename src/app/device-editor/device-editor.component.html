@@ -19,14 +19,16 @@
         <input type="text" formControlName="endpoint" class="form-control" id="deviceEndpoint" name="endpoint">
       </div>
       <div class="mb-3">
-        <label for="deviceType" class="form-label">Type</label>
-        <select class="form-select" id="deviceType" formControlName="type" name="type" #type (input)="selectedIconIndex=0">
-          <option value="switch">Switch</option>
-          <option value="level">Level</option>
-        </select>
+        <div class="btn-group d-flex flex-wrap justify-content-center align-items-center" role="group" aria-label="Type group">
+          <input type="radio" class="btn-check" id="digital" formControlName="type" value="digital" autocomplete="off">
+          <label class="btn btn-outline-primary" for="digital">Digital</label>
+
+          <input type="radio" class="btn-check" id="analog" formControlName="type" value="analog" autocomplete="off">
+          <label class="btn btn-outline-primary" for="analog">Analog</label>
+        </div>
       </div>
     </form>
-    @if(type.value === "switch") {
+    @if(this.deviceForm.value.type === "digital") {
       <div  *ngFor="let iconList of [iconListOn, iconListOff]">
         <div class="d-flex flex-wrap gap-2 justify-content-center align-items-center">
           <i style="font-size: 1.75rem; cursor: pointer;"

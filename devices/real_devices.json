@@ -1,0 +1,34 @@
+{
+    "devices": [
+        {
+            "name": "Lamp",
+            "endpoint": "http://cortana.viewdns.net:8080/api/devices/lamp"
+        },
+        {
+            "name": "Computer",
+            "endpoint": "http://cortana.viewdns.net:8080/api/devices/computer"
+        },
+        {
+            "name": "Power",
+            "endpoint": "http://cortana.viewdns.net:8080/api/devices/power"
+        },
+        {
+            "name": "Generic",
+            "endpoint": "http://cortana.viewdns.net:8080/api/devices/generic"
+        }
+    ],
+    "sensors": [
+      {
+          "name": "Temperature",
+          "endpoint": "http://cortana.viewdns.net:8080/api/sensors/temperature"
+      },
+      {
+        "name": "Light",
+        "endpoint": "http://cortana.viewdns.net:8080/api/sensors/light"
+      },
+      {
+        "name": "Motion",
+        "endpoint": "http://cortana.viewdns.net:8080/api/sensors/motion"
+      }
+    ]
+}

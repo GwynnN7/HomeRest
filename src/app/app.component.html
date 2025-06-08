@@ -3,11 +3,14 @@
     <div *ngIf="!isOnline" class="alert alert-warning">
       ⚠️ You are offline, connect to internet to load your devices!
     </div>
-    <div class="row">
-      <div class="col-lg-2">
-        <app-side-bar></app-side-bar>
+    <div class="row align-items-stretch min-vh-100">
+      <div class="col" style="flex: 0 0 15%; max-width: 15%;">
+        <app-side-bar ></app-side-bar>
       </div>
-      <div class="col-lg-9 p-4">
+      <div class="col-auto d-flex justify-content-center">
+        <div class="vr bg-secondary"></div>
+      </div>
+      <div class="col" style="flex: 0 0 80%; max-width: 80%;">
         <router-outlet></router-outlet>
       </div>
     </div>
