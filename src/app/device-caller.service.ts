@@ -22,3 +22,9 @@ export class DeviceCallerService {
     return this.httpClient.post<DeviceResponse>(url, {action: action}, {headers: {'Content-Type': 'application/json'}});
   }
 }
+
+export enum ApiResponse{
+  Offline,
+  Unknown,
+  Online
+}

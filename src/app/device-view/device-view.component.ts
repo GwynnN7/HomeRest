@@ -1,9 +1,10 @@
 import {Component, inject, Input, OnDestroy, OnInit} from '@angular/core';
 import {DeviceInfo} from '../device-info';
-import {DeviceCallerService} from '../device-caller.service';
+import {ApiResponse, DeviceCallerService} from '../device-caller.service';
 import {NgClass, NgForOf} from '@angular/common';
 import * as devicesIcons from '../../../devices/icons.json'
 import {catchError, interval, of, startWith, Subscription, switchMap} from 'rxjs';
+import {NotificationService} from '../notification.service';
 
 @Component({
   selector: 'app-device-view',
@@ -18,6 +19,7 @@ export class DeviceViewComponent implements OnInit, OnDestroy{
   @Input() device!: DeviceInfo;
 
   deviceCaller = inject(DeviceCallerService)
+  notificationService: NotificationService = inject(NotificationService);
   private timer?: Subscription;
 
   iconListOn: string[] = devicesIcons['switch_on'];
@@ -26,7 +28,8 @@ export class DeviceViewComponent implements OnInit, OnDestroy{
   iconListErrors: string[] = devicesIcons['error'];
 
   status: string = "";
-  apiStatus: number = 0;
+  lastStatus: string = "";
+  apiStatus: ApiResponse = ApiResponse.Offline;
 
   ngOnInit(): void {
     this.timer = interval(2000)
@@ -41,14 +44,22 @@ export class DeviceViewComponent implements OnInit, OnDestroy{
       .subscribe({
         next: device => {
           this.status = '';
-          this.apiStatus = 0;
+          this.apiStatus = ApiResponse.Offline;
 
           if(!device) return;
-          this.apiStatus = 1;
+          this.apiStatus = ApiResponse.Unknown;
 
           if(device.status && (this.device.type === "digital" && isNaN(parseFloat(device.status))) || (this.device.type === "analog" && !isNaN(parseFloat(device.status)))) {
             this.status = device.status.toLowerCase();
-            this.apiStatus = 2;
+            if(this.lastStatus !== this.status)
+            {
+              if(this.device.notification && this.lastStatus !== "")
+              {
+                this.notificationService.show(`${device.device}: ${device.status}`)
+              }
+              this.lastStatus = this.status;
+            }
+            this.apiStatus = ApiResponse.Online;
           }
         }
       });
@@ -64,4 +75,6 @@ export class DeviceViewComponent implements OnInit, OnDestroy{
     })
     $event.stopPropagation();
   }
+
+  protected readonly ApiResponse = ApiResponse;
 }

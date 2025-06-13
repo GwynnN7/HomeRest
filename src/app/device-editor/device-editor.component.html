@@ -18,6 +18,10 @@
         <label for="deviceEndpoint" class="form-label">Endpoint</label>
         <input type="text" formControlName="endpoint" class="form-control" id="deviceEndpoint" name="endpoint">
       </div>
+      <div class="mb-3 form-check form-switch">
+        <input class="form-check-input" id="notification" type="checkbox" role="switch" id="switchNotification" formControlName="notification">
+        <label class="form-check-label" for="switchNotification">Notification on status change</label>
+      </div>
       <div class="mb-3">
         <div class="btn-group d-flex flex-wrap justify-content-center align-items-center" role="group" aria-label="Type group">
           <input type="radio" class="btn-check" id="digital" formControlName="type" value="digital" autocomplete="off">

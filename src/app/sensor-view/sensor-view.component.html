@@ -4,11 +4,11 @@
     <div class="d-flex justify-content-center align-items-center">
       @if(sensor.type === "digital"){
       <i class="bi" style="font-size: 2.5rem;"
-         [ngClass]="apiStatus === 2 ? (status === 'true' ? iconListOn[sensor.iconId] + ' text-info' : iconListOff[sensor.iconId] + ' text-secondary') : iconListErrors[apiStatus] + ' text-danger'"
+         [ngClass]="apiStatus === ApiResponse.Online ? (status === 'true' ? iconListOn[sensor.iconId] + ' text-info' : iconListOff[sensor.iconId] + ' text-secondary') : iconListErrors[apiStatus] + ' text-danger'"
       ></i>
       } @else {
-        <i class="bi" style="font-size: 2.5rem;"
-           [ngClass]="apiStatus === 2 ? iconListNeutral[sensor.iconId] + ' text-info' : iconListErrors[apiStatus] + ' text-danger'"
+        <i class="bi m-1" style="font-size: 2.5rem;"
+           [ngClass]="apiStatus === ApiResponse.Online ? iconListNeutral[sensor.iconId] + ' text-info' : iconListErrors[apiStatus] + ' text-danger'"
         ></i>
         <span class="fs-5">{{ status + unit }}</span>
       }

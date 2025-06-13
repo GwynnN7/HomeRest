@@ -3,5 +3,6 @@ export interface DeviceInfo {
   name: string;
   endpoint: string;
   type: string;
+  notification: boolean;
   iconId: number;
 }

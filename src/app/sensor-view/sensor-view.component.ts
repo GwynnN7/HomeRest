@@ -1,9 +1,10 @@
 import {Component, inject, Input, OnDestroy, OnInit} from '@angular/core';
 import {DeviceInfo} from '../device-info';
-import {DeviceCallerService} from '../device-caller.service';
+import {ApiResponse, DeviceCallerService} from '../device-caller.service';
 import * as devicesIcons from '../../../devices/icons.json';
 import {NgClass} from '@angular/common';
 import {catchError, interval, of, startWith, Subscription, switchMap} from 'rxjs';
+import {NotificationService} from '../notification.service';
 @Component({
   selector: 'app-sensor-view',
   imports: [
@@ -16,6 +17,7 @@ export class SensorViewComponent implements OnInit, OnDestroy {
   @Input() sensor!: DeviceInfo;
 
   deviceCaller = inject(DeviceCallerService)
+  notificationService: NotificationService = inject(NotificationService);
   private timer?: Subscription;
 
   iconListOn: string[] = devicesIcons['switch_on'];
@@ -23,9 +25,10 @@ export class SensorViewComponent implements OnInit, OnDestroy {
   iconListNeutral: string[] = devicesIcons['neutral'];
   iconListErrors: string[] = devicesIcons['error'];
   status: string = "";
+  lastStatus: string = "";
   unit: string = "";
 
-  apiStatus: number = 0;
+  apiStatus: ApiResponse = ApiResponse.Offline;
 
   ngOnInit(): void {
     this.timer = interval(2000)
@@ -41,15 +44,23 @@ export class SensorViewComponent implements OnInit, OnDestroy {
         next: sensor => {
           this.status = '';
           this.unit = '';
-          this.apiStatus = 0;
+          this.apiStatus = ApiResponse.Offline;
 
           if(!sensor) return;
-          this.apiStatus = 1;
+          this.apiStatus = ApiResponse.Unknown;
 
           if(sensor.value && (this.sensor.type === "digital" && isNaN(parseFloat(sensor.value))) || (this.sensor.type === "analog" && !isNaN(parseFloat(sensor.value)))) {
             this.status = sensor.value.toLowerCase();
+            if(this.lastStatus !== this.status)
+            {
+              if(this.sensor.notification && this.lastStatus !== "")
+              {
+                this.notificationService.show(`${sensor.sensor}: ${sensor.value}${sensor.unit}`)
+              }
+              this.lastStatus = this.status;
+            }
             this.unit = sensor.unit;
-            this.apiStatus = 2;
+            this.apiStatus = ApiResponse.Online;
           }
         }
       });
@@ -58,4 +69,6 @@ export class SensorViewComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.timer?.unsubscribe();
   }
+
+  protected readonly ApiResponse = ApiResponse;
 }

@@ -4,6 +4,7 @@ import {SideBarComponent} from './side-bar/side-bar.component';
 import {NavigationStart, Router, RouterOutlet} from '@angular/router';
 import {NgIf} from '@angular/common';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {NotificationService} from './notification.service';
 
 @Component({
   selector: 'app-root',
@@ -12,7 +13,8 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
   styleUrl: './app.component.css'
 })
 export class AppComponent implements OnInit {
-  firebaseService = inject(FirebaseService);
+  firebaseService: FirebaseService = inject(FirebaseService);
+  notificationService: NotificationService = inject(NotificationService)
   router: Router = inject(Router);
   modalService: NgbModal = inject(NgbModal);
   isOnline = navigator.onLine;
@@ -38,5 +40,7 @@ export class AppComponent implements OnInit {
     });
 
     this.firebaseService.updateUser();
+
+    this.notificationService.requestPermission();
   }
 }

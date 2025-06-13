@@ -34,6 +34,7 @@ export class DeviceEditorComponent implements OnInit {
     name: new FormControl('', [Validators.required]),
     endpoint: new FormControl('', [Validators.required]),
     type: new FormControl('digital', [Validators.required]),
+    notification: new FormControl(false),
   })
 
   ngOnInit(): void {
@@ -43,6 +44,7 @@ export class DeviceEditorComponent implements OnInit {
           name: this.selectedDevice.name,
           endpoint: this.selectedDevice.endpoint,
           type: this.selectedDevice.type,
+          notification: this.selectedDevice.notification
         }
       );
       this.selectIcon(this.selectedDevice.iconId);
@@ -59,6 +61,7 @@ export class DeviceEditorComponent implements OnInit {
       id: editMode ? this.selectedDevice!.id : crypto.randomUUID(),
       name: this.deviceForm.value.name,
       type: this.deviceForm.value.type,
+      notification: this.deviceForm.value.notification,
       endpoint: this.deviceForm.value.endpoint,
       iconId: this.selectedIconIndex
     };
