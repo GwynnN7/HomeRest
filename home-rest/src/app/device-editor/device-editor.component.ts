@@ -4,7 +4,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import {DeviceInfo} from '../device-info';
 import {NgClass, NgForOf, NgIf} from '@angular/common';
 import {FirebaseService} from '../firebase.service';
-import * as devicesIcons from '../../../devices/icons.json'
+import * as devicesIcons from '../../icons.json'
 
 @Component({
   selector: 'app-device-editor',

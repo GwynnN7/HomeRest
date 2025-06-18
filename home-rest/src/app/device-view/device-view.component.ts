@@ -2,9 +2,10 @@ import {Component, inject, Input, OnDestroy, OnInit} from '@angular/core';
 import {DeviceInfo} from '../device-info';
 import {ApiResponse, DeviceCallerService} from '../device-caller.service';
 import {NgClass, NgForOf} from '@angular/common';
-import * as devicesIcons from '../../../devices/icons.json'
+import * as devicesIcons from '../../icons.json'
 import {catchError, interval, of, startWith, Subscription, switchMap} from 'rxjs';
 import {NotificationService} from '../notification.service';
+import {DeviceResponse} from '../device-response';
 
 @Component({
   selector: 'app-device-view',
@@ -42,27 +43,29 @@ export class DeviceViewComponent implements OnInit, OnDestroy{
         ))
       )
       .subscribe({
-        next: device => {
-          this.status = '';
-          this.apiStatus = ApiResponse.Offline;
-
-          if(!device) return;
-          this.apiStatus = ApiResponse.Unknown;
-
-          if(device.status && (this.device.type === "digital" && isNaN(parseFloat(device.status))) || (this.device.type === "analog" && !isNaN(parseFloat(device.status)))) {
-            this.status = device.status.toLowerCase();
-            if(this.lastStatus !== this.status)
-            {
-              if(this.device.notification && this.lastStatus !== "")
-              {
-                this.notificationService.show(`${device.device}: ${device.status}`)
-              }
-              this.lastStatus = this.status;
-            }
-            this.apiStatus = ApiResponse.Online;
-          }
-        }
+        next: device => this.updateStatus(device)
       });
+  }
+
+  updateStatus(device: DeviceResponse | null) {
+    this.status = '';
+    this.apiStatus = ApiResponse.Offline;
+
+    if(!device) return;
+    this.apiStatus = ApiResponse.Unknown;
+
+    if(device.status && (this.device.type === "digital" && isNaN(parseFloat(device.status))) || (this.device.type === "analog" && !isNaN(parseFloat(device.status)))) {
+      this.status = device.status.toLowerCase();
+      if(this.lastStatus !== this.status)
+      {
+        if(this.device.notification && this.lastStatus !== "")
+        {
+          this.notificationService.show(`${device.device}: ${device.status}`)
+        }
+        this.lastStatus = this.status;
+      }
+      this.apiStatus = ApiResponse.Online;
+    }
   }
 
   ngOnDestroy(): void {
@@ -71,7 +74,7 @@ export class DeviceViewComponent implements OnInit, OnDestroy{
 
   callDeviceEndpoint(action: string, $event: MouseEvent): void {
     this.deviceCaller.postDevice(this.device!.endpoint, action).subscribe(device => {
-      this.status = device.status;
+      this.updateStatus(device);
     })
     $event.stopPropagation();
   }
