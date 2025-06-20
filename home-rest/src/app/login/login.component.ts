@@ -1,7 +1,8 @@
 import {Component, inject} from '@angular/core';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
-import {FirebaseService} from '../firebase.service';
+import {FirebaseService, getFirebaseAuthErrorMessage} from '../firebase.service';
 import {Router} from '@angular/router';
+import {ToastService} from '../toast.service';
 
 @Component({
   selector: 'app-login',
@@ -14,6 +15,7 @@ import {Router} from '@angular/router';
 })
 export class LoginComponent {
   firebaseService = inject(FirebaseService);
+  toastService: ToastService = inject(ToastService);
   router = inject(Router);
 
   loginForm = new FormGroup({
@@ -26,16 +28,16 @@ export class LoginComponent {
       .then(_ => {
         this.router.navigateByUrl('/');
       }).catch(error => {
-          alert(error.code);
+      this.toastService.show(getFirebaseAuthErrorMessage(error.code));
     });
   }
 
   google(): void {
     this.firebaseService.loginWithGoogle()
       .then(_ => {
-        this.router.navigateByUrl("/devices");
+        this.router.navigateByUrl('/');
       }).catch(error => {
-          alert(error.code);
+        this.toastService.show(getFirebaseAuthErrorMessage(error.code));
     });
   }
 }

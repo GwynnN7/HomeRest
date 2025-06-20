@@ -42,6 +42,7 @@
              [ngClass]="{'border border-light rounded p-1': selectedIconIndex === iconList.indexOf(icon)}"
           ></i>
         </div>
+        <hr class="my-3 border-light" *ngIf="iconList === iconListOn"/>
       </div>
     }
     @else{
@@ -61,14 +62,26 @@
   </div>
 
   <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" (click)="activeModal.dismiss()">Cancel</button>
-    <button type="button" *ngIf="selectedDevice != undefined" class="btn btn-danger" (click)="deleteDevice()">Delete</button>
-    <button type="button" class="btn btn-primary" (click)="addDevice()" [disabled]="!deviceForm.valid">
-      @if(selectedDevice == undefined){
-        Add
-      } @else {
-        Edit
-      }
-    </button>
+    <div class="row g-2 justify-content-center">
+      <div class="col-auto">
+        <button type="button" class="btn btn-secondary w-100" (click)="activeModal.dismiss()">Cancel</button>
+      </div>
+
+      <div class="col-auto">
+        <button type="button" *ngIf="selectedDevice != undefined" class="btn btn-danger w-100" (click)="deleteDevice()">Delete</button>
+      </div>
+      <div class="col-auto">
+        <button type="button" class="btn btn-primary w-100" (click)="addDevice()" [disabled]="!deviceForm.valid">
+          @if(selectedDevice == undefined){
+            Add
+          } @else {
+            Edit
+          }
+        </button>
+      </div>
+    </div>
+
+
+
   </div>
 </div>

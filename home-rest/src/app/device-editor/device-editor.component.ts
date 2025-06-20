@@ -5,6 +5,7 @@ import {DeviceInfo} from '../device-info';
 import {NgClass, NgForOf, NgIf} from '@angular/common';
 import {FirebaseService} from '../firebase.service';
 import * as devicesIcons from '../../icons.json'
+import {ToastService} from '../toast.service';
 
 @Component({
   selector: 'app-device-editor',
@@ -23,6 +24,7 @@ export class DeviceEditorComponent implements OnInit {
   @Input() category!: string;
 
   firebaseService: FirebaseService = inject(FirebaseService);
+  toastService: ToastService = inject(ToastService);
   activeModal = inject(NgbActiveModal)
 
   iconListOn: string[] = devicesIcons['switch_on'];
@@ -68,7 +70,7 @@ export class DeviceEditorComponent implements OnInit {
 
     this.firebaseService.addDevice(newDevice, this.category, editMode).then( result => {
         if(result) this.activeModal.close();
-        else alert("There was an error while creating the device.");
+        else this.toastService.show("There was an error while creating the device");
       }
     )
   }
@@ -82,7 +84,7 @@ export class DeviceEditorComponent implements OnInit {
     this.firebaseService.deleteDevice(this.selectedDevice!, this.category).then( result => {
       if(result) this.activeModal.close();
       else{
-        alert("There was an error while deleting the device.");
+        this.toastService.show("There was an error while deleting the device.");
         this.activeModal.dismiss();
       }
     })

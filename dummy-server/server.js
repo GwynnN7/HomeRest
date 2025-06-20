@@ -12,7 +12,7 @@ let dummyData = {}
 
 app.use('/dummy', async (req, res, next) => {
   fs.readFile('./devices/dummy_devices.json', (err, data) => {
-    if (err) return res.sendStatus(500).send({ error: 'Devices could not be loaded' });
+    if (err) return res.status(500).send({ error: 'Devices could not be loaded' });
 
     dummyData = JSON.parse(data);
     next();
@@ -122,7 +122,7 @@ function updateDummySensors() {
           if(s.value === 'true') s.value = 'false'
           else if(s.value === 'false') s.value = 'true'
           else{
-            const increment = Math.floor(Math.random() * 4) - 2;
+            const increment = Math.round(Math.random() * 4) - 2;
             s.value = (parseFloat(s.value) + increment).toString();
           }
         }
@@ -130,9 +130,10 @@ function updateDummySensors() {
       dummyData.sensors = sensors;
       fs.writeFile('./devices/dummy_devices.json', JSON.stringify(dummyData, null, 4), () => {});
     })
+      .catch(_ => {});
 }
 
-setInterval(updateDummySensors, 3000);
+setInterval(updateDummySensors, 5000);
 
 app.listen(port, () => {
   console.log(`Devices API server running at http://localhost:${port}`);

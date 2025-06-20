@@ -1,39 +1,47 @@
-<nav class="collapse d-lg-block sidebar bg-dark">
-  <div class="position-sticky">
-    <div class="text-center py-4 border-bottom" style="overflow-x: hidden; white-space: wrap;">
-      @if ((this.firebaseService.userSignal()?.displayName ?? '') !== '') {
-        <h4 class="fw-bold">{{ this.firebaseService.userSignal()?.displayName }}'s Home</h4>
-      } @else{
-        <h4 class="fw-bold">Home Rest</h4>
-      }
-    </div>
-    <div class="list-group list-group-flush mx-2 mt-3 pb-2 border-bottom">
-      <a routerLink="/" class="list-group-item list-group-item-action bg-dark border-0 py-3 ripple"
-         [ngClass]="this.router.url == '/' ? 'active' : ''">
-        <i class="bi bi-house me-3"></i> Dashboard
-      </a>
-      <a routerLink="/devices" class="list-group-item list-group-item-action bg-dark border-0 py-3 ripple"
-         [ngClass]="this.router.url == '/devices' ? 'active' : ''">
-        <i class="bi bi-lightbulb-fill me-3"></i> Devices
-      </a>
-      <a routerLink="/sensors" class="list-group-item list-group-item-action bg-dark border-0 py-3 ripple"
-         [ngClass]="this.router.url == '/sensors' ? 'active' : ''">
-        <i class="bi bi-thermometer-high me-3"></i> Sensors
-      </a>
-
-    </div>
-    <div class="list-group list-group-flush mx-2 mt-3">
-      @if(this.firebaseService.userSignal()){
-        <a routerLink="/account" class="list-group-item list-group-item-action bg-dark border-0 py-3 ripple"
-           [ngClass]="this.router.url == '/account' ? 'active' : ''">
-          <i class="bi bi-gear me-3"></i> Account
-        </a>
-      } @else{
-        <a routerLink="/login" class="list-group-item list-group-item-action bg-dark border-0 py-3 ripple"
-           [ngClass]="this.router.url == '/' ? 'login' : ''">
-          <i class="bi bi-gear me-3"></i> Login
-        </a>
-      }
-    </div>
+<div class="sidebar">
+  <div class="title-big text-center py-4 border-bottom" style="overflow-x: hidden; white-space: wrap;">
+    @if ((this.firebaseService.userSignal()?.displayName ?? '') !== '') {
+      <h4 class="fw-bold">{{ this.firebaseService.userSignal()?.displayName }}'s Home</h4>
+    } @else {
+      <h4 class="fw-bold">Home Rest</h4>
+    }
   </div>
-</nav>
+
+  <div class="title-small text-center py-4 border-bottom" style="display: none">
+    <h4 class="fw-bold">Home</h4>
+  </div>
+
+  <div class="list-group list-group-flush mx-2 mt-3 pb-2 border-bottom">
+    <a routerLink="/" title="Dashboard" class="list-group-item list-group-item-action bg-dark border-0 py-3 ripple d-flex justify-content-center"
+       [ngClass]="this.router.url == '/' ? 'active' : ''" data-bs-dismiss="offcanvas">
+      <i class="bi bi-house"></i>
+      <span class="sidebar-text ms-3">Dashboard</span>
+    </a>
+    <a routerLink="/devices" title="Devices" class="list-group-item list-group-item-action bg-dark border-0 py-3 ripple d-flex justify-content-center"
+       [ngClass]="this.router.url == '/devices' ? 'active' : ''" data-bs-dismiss="offcanvas">
+      <i class="bi bi-lightbulb-fill"></i>
+      <span class="sidebar-text ms-3">Devices</span>
+    </a>
+    <a routerLink="/sensors" title="Sensors" class="list-group-item list-group-item-action bg-dark border-0 py-3 ripple d-flex justify-content-center"
+       [ngClass]="this.router.url == '/sensors' ? 'active' : ''" data-bs-dismiss="offcanvas">
+      <i class="bi bi-thermometer-high"></i>
+      <span class="sidebar-text ms-3">Sensors</span>
+    </a>
+  </div>
+
+  <div class="list-group list-group-flush mx-2 mt-3">
+    @if(this.firebaseService.userSignal()) {
+      <a routerLink="/account" title="Account" class="list-group-item list-group-item-action bg-dark border-0 py-3 ripple d-flex justify-content-center"
+         [ngClass]="this.router.url == '/account' ? 'active' : ''" data-bs-dismiss="offcanvas">
+        <i class="bi bi-gear"></i>
+        <span class="sidebar-text ms-3">Account</span>
+      </a>
+    } @else {
+      <a routerLink="/login" title="Login" class="list-group-item list-group-item-action bg-dark border-0 py-3 ripple d-flex justify-content-center"
+         [ngClass]="this.router.url == '/login' ? 'active' : ''" data-bs-dismiss="offcanvas">
+        <i class="bi bi-gear"></i>
+        <span class="sidebar-text ms-3">Login</span>
+      </a>
+    }
+  </div>
+</div>

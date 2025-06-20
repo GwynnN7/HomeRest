@@ -5,6 +5,7 @@ import * as devicesIcons from '../../icons.json';
 import {NgClass} from '@angular/common';
 import {catchError, interval, of, startWith, Subscription, switchMap} from 'rxjs';
 import {NotificationService} from '../notification.service';
+import {getDeviceFontClass} from '../toast.service';
 @Component({
   selector: 'app-sensor-view',
   imports: [
@@ -53,8 +54,7 @@ export class SensorViewComponent implements OnInit, OnDestroy {
             this.status = sensor.value.toLowerCase();
             if(this.lastStatus !== this.status)
             {
-              if(this.sensor.notification && this.lastStatus !== "")
-              {
+              if(this.sensor.notification && this.lastStatus !== "") {
                 this.notificationService.show(`${sensor.sensor}: ${sensor.value}${sensor.unit}`)
               }
               this.lastStatus = this.status;
@@ -71,4 +71,5 @@ export class SensorViewComponent implements OnInit, OnDestroy {
   }
 
   protected readonly ApiResponse = ApiResponse;
+  protected readonly getDeviceFontClass = getDeviceFontClass;
 }

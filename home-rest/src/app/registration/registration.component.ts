@@ -1,7 +1,8 @@
 import {Component, inject} from '@angular/core';
-import {FirebaseService} from '../firebase.service';
+import {FirebaseService, getFirebaseAuthErrorMessage} from '../firebase.service';
 import {Router} from '@angular/router';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {ToastService} from '../toast.service';
 
 @Component({
   selector: 'app-registration',
@@ -13,6 +14,7 @@ import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/
 })
 export class RegistrationComponent {
   firebaseService = inject(FirebaseService);
+  toastService: ToastService = inject(ToastService);
   router = inject(Router);
 
   registrationForm = new FormGroup({
@@ -27,7 +29,7 @@ export class RegistrationComponent {
         this.router.navigateByUrl('/');
       })
       .catch(error => {
-        alert(error.code);
+        this.toastService.show(getFirebaseAuthErrorMessage(error.code));
     });
   }
 }

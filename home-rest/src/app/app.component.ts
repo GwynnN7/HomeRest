@@ -5,10 +5,11 @@ import {NavigationStart, Router, RouterOutlet} from '@angular/router';
 import {NgIf} from '@angular/common';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {NotificationService} from './notification.service';
+import {ToastComponent} from './toast/toast.component';
 
 @Component({
   selector: 'app-root',
-  imports: [SideBarComponent, RouterOutlet, NgIf],
+  imports: [SideBarComponent, RouterOutlet, NgIf, ToastComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

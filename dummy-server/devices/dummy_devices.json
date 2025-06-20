@@ -11,7 +11,7 @@
         },
         {
             "name": "Fan",
-            "status": "3",
+            "status": "0",
             "actions": [
                 "0",
                 "1",
@@ -41,17 +41,17 @@
     "sensors": [
         {
             "name": "Temperature",
-            "value": "-82",
+            "value": "96",
             "unit": "°C"
         },
         {
             "name": "Humidity",
-            "value": "-29",
+            "value": "-17",
             "unit": "%"
         },
         {
             "name": "Light",
-            "value": "-40",
+            "value": "53",
             "unit": "%"
         },
         {

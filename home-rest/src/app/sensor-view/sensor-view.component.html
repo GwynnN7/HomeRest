@@ -1,7 +1,10 @@
 @if(sensor != undefined) {
-  <div class="card h-100 d-flex flex-column justify-content-center align-items-center p-3">
-    <h4 class="fw-bold mb-1" style="font-family: 'Segoe UI', sans-serif;">{{ sensor.name }}</h4>
-    <div class="d-flex justify-content-center align-items-center">
+  <div class="card sensor-card text-center p-3 d-flex flex-column justify-content-between w-100 h-100">
+    <h3 class="fw-bold mb-1 text-center text-break"
+        [ngClass]="getDeviceFontClass(sensor.name)">
+      {{ sensor.name }}
+    </h3>
+    <div class="d-flex justify-content-center gap-1 align-items-center">
       @if(sensor.type === "digital"){
       <i class="bi" style="font-size: 2.5rem;"
          [ngClass]="apiStatus === ApiResponse.Online ? (status === 'true' ? iconListOn[sensor.iconId] + ' text-info' : iconListOff[sensor.iconId] + ' text-secondary') : iconListErrors[apiStatus] + ' text-danger'"
@@ -10,7 +13,7 @@
         <i class="bi m-1" style="font-size: 2.5rem;"
            [ngClass]="apiStatus === ApiResponse.Online ? iconListNeutral[sensor.iconId] + ' text-info' : iconListErrors[apiStatus] + ' text-danger'"
         ></i>
-        <span class="fs-5">{{ status + unit }}</span>
+        <h3 class="fs-5">{{ status + unit }}</h3>
       }
     </div>
   </div>

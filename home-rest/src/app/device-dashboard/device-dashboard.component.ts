@@ -1,7 +1,7 @@
 import {Component, inject, OnInit} from '@angular/core';
 import {FirebaseService} from '../firebase.service';
 import {DeviceViewComponent} from '../device-view/device-view.component';
-import {NgForOf} from '@angular/common';
+import {NgForOf, NgIf} from '@angular/common';
 import {DeviceInfo} from '../device-info';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {DeviceEditorComponent} from '../device-editor/device-editor.component';
@@ -11,7 +11,8 @@ import {Router} from '@angular/router';
   selector: 'app-device-dashboard',
   imports: [
     DeviceViewComponent,
-    NgForOf
+    NgForOf,
+    NgIf
   ],
   templateUrl: './device-dashboard.component.html',
   styleUrl: './device-dashboard.component.css'

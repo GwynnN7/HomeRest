@@ -1,4 +1,4 @@
-import {Component, effect, inject, OnInit} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {FirebaseService} from '../firebase.service';
 import {NgIf} from '@angular/common';
@@ -11,6 +11,7 @@ import {
   ValidationErrors,
 } from '@angular/forms';
 import {map, Observable, of} from 'rxjs';
+import {ToastService} from '../toast.service';
 
 @Component({
   selector: 'app-account',
@@ -23,8 +24,9 @@ import {map, Observable, of} from 'rxjs';
   styleUrl: './account.component.css'
 })
 export class AccountComponent implements OnInit {
-  router = inject(Router);
-  firebaseService = inject(FirebaseService);
+  router: Router = inject(Router);
+  firebaseService: FirebaseService = inject(FirebaseService);
+  toastService: ToastService = inject(ToastService);
   updateForm: FormGroup | undefined;
 
   usernameValidator = (): AsyncValidatorFn => {
@@ -56,5 +58,11 @@ export class AccountComponent implements OnInit {
     this.firebaseService.updateUsername(this.updateForm!.value.username).then(_ => {
       this.updateForm?.get('username')?.updateValueAndValidity();
     });
+  }
+
+  delete() {
+    this.firebaseService.deleteAccount().then(() => {
+      this.router.navigateByUrl('/register');
+    }).catch(_ => this.toastService.show("Error while deleting the account"));
   }
 }

@@ -6,6 +6,7 @@ import * as devicesIcons from '../../icons.json'
 import {catchError, interval, of, startWith, Subscription, switchMap} from 'rxjs';
 import {NotificationService} from '../notification.service';
 import {DeviceResponse} from '../device-response';
+import {getDeviceFontClass} from '../toast.service';
 
 @Component({
   selector: 'app-device-view',
@@ -60,7 +61,7 @@ export class DeviceViewComponent implements OnInit, OnDestroy{
       {
         if(this.device.notification && this.lastStatus !== "")
         {
-          this.notificationService.show(`${device.device}: ${device.status}`)
+          this.notificationService.show(`${device.device} switched ${device.status}`)
         }
         this.lastStatus = this.status;
       }
@@ -80,4 +81,5 @@ export class DeviceViewComponent implements OnInit, OnDestroy{
   }
 
   protected readonly ApiResponse = ApiResponse;
+  protected readonly getDeviceFontClass = getDeviceFontClass;
 }

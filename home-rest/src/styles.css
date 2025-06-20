@@ -1,0 +1,36 @@
+@media (max-width: 1250px) {
+  #mainSidebar .sidebar-text {
+    display: none !important;
+  }
+
+  #mainSidebar i {
+    font-size: 1.5em !important;
+  }
+
+  #mainSidebar .title-big {
+    display: none !important;
+  }
+
+  #mainSidebar .title-small {
+    display: block !important;
+  }
+}
+
+@media (max-width: 250px) {
+  #mobileSidebar .sidebar-text {
+    display: none !important;
+  }
+
+  #mobileSidebar i {
+    font-size: 1.5em !important;
+  }
+
+  #mobileSidebar .title-big {
+    display: none !important;
+  }
+
+  #mobileSidebar .title-small {
+    display: block !important;
+  }
+}
+

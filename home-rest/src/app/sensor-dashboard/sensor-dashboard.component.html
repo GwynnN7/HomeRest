@@ -1,17 +1,23 @@
+<div class="container my-4 text-center" *ngIf="this.router.url === '/'">
+  <h3><i class="bi bi-thermometer-high"></i> Sensors</h3>
+</div>
+
 <div class="container my-4">
-  <div class="row row-cols-1 row-cols-md-3 g-3">
-    <div class="col" *ngFor="let sensor of sensors">
+  <div class="row g-3 justify-content-center">
+    <div class="col-12 col-sm-6 col-md-4 col-lg-3" *ngFor="let sensor of sensors">
       <app-sensor-view [sensor]="sensor" (click)="openEditModal(sensor)"></app-sensor-view>
     </div>
 
     @if (this.router.url != '/') {
-      <div class="col">
-        <div class="card h-100 d-flex flex-column justify-content-center align-items-center p-3" style="cursor: pointer;"  (click)="openAddModal()">
+      <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+        <div class="card sensor-card text-center p-3 d-flex flex-column justify-content-center w-100 h-100" style="cursor: pointer;" (click)="openAddModal()">
           <div class="display-4 text-primary">+</div>
-          <p class="mt-2">Add Sensor</p>
+          <p class="mt-2 mb-0">Add Sensor</p>
         </div>
       </div>
     }
   </div>
 </div>
+
+
 

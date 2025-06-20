@@ -42,7 +42,7 @@ ng build
 To start the project as PWA, run:
 
 ```bash
-npx http-server -p 8080 -c-1 dist/home-rest/browser
+npx serve -p 8080 -s dist/home-rest/browser
 ```
 
 Once the server is running, open your browser and navigate to `http://localhost:8080/`
