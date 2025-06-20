@@ -83,9 +83,14 @@ app.get('/real/sensors/:name', async (req, res) => {
 
   if (!sensor) return res.status(404).send({error: 'Sensor not found'});
 
-  const result = await fetch(sensor.endpoint, {method: "GET", headers: { 'Content-Type': 'application/json' }});
-  const data = await result.json();
-  res.json(data);
+  try{
+    const result = await fetch(sensor.endpoint, {method: "GET", headers: { 'Content-Type': 'application/json' }});
+    const data = await result.json();
+    res.json(data);
+  }
+  catch {
+    res.status(500).send({error: 'Sensor not reachable'});
+  }
 });
 
 app.get('/real/devices/:name', async (req, res) => {
@@ -93,9 +98,14 @@ app.get('/real/devices/:name', async (req, res) => {
 
   if (!device) return res.status(404).send({ error: 'Device not found' });
 
-  const result = await fetch(device.endpoint, {method: "GET", headers: { 'Content-Type': 'application/json' }});
-  const data = await result.json();
-  res.json(data);
+  try{
+    const result = await fetch(device.endpoint, {method: "GET", headers: { 'Content-Type': 'application/json' }});
+    const data = await result.json();
+    res.json(data);
+  }
+  catch {
+    res.status(500).send({error: 'Device not reachable'});
+  }
 });
 
 app.post('/real/devices/:name', async (req, res) => {
@@ -107,9 +117,14 @@ app.post('/real/devices/:name', async (req, res) => {
   if (!device) return res.status(404).send({ error: 'Device not found' });
   if(!action) return res.status(400).send({ error: 'Missing action field in body' });
 
-  const result = await fetch(device.endpoint, {method: "POST", body: JSON.stringify({action: action}), headers: { 'Content-Type': 'application/json' }});
-  const data = await result.json();
-  res.json(data);
+  try{
+    const result = await fetch(device.endpoint, {method: "POST", body: JSON.stringify({action: action}), headers: { 'Content-Type': 'application/json' }});
+    const data = await result.json();
+    res.json(data);
+  }
+  catch {
+    res.status(500).send({error: 'Device not reachable'});
+  }
 });
 
 function updateDummySensors() {

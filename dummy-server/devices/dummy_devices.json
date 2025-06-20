@@ -41,17 +41,17 @@
     "sensors": [
         {
             "name": "Temperature",
-            "value": "96",
+            "value": "93",
             "unit": "°C"
         },
         {
             "name": "Humidity",
-            "value": "-17",
+            "value": "-20",
             "unit": "%"
         },
         {
             "name": "Light",
-            "value": "53",
+            "value": "37",
             "unit": "%"
         },
         {
