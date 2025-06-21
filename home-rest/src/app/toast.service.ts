@@ -5,15 +5,24 @@ import {Subject} from 'rxjs';
   providedIn: 'root'
 })
 export class ToastService {
-  private toastSubject = new Subject<string>();
-  toast$ = this.toastSubject.asObservable();
+  private toastSubject = new Subject<ToastMessage>();
+  toastObservable = this.toastSubject.asObservable();
 
-  show(message: string) {
-    this.toastSubject.next(message);
+  show(message: string, color: string = "bg-danger") {
+    this.toastSubject.next(new ToastMessage(message, color));
+  }
+
+  dismiss(){
+    this.show("");
   }
 }
 
-export function getDeviceFontClass(name: string): string {
-  if (name.length > 10) return 'fs-6';
-  return 'fs-5';
+export class ToastMessage {
+  message: string;
+  color: string;
+
+  constructor(message: string, color: string) {
+    this.message = message;
+    this.color = color;
+  }
 }

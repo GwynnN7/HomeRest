@@ -33,9 +33,16 @@ export class FirebaseService {
   private updateUserSignal(user: User | null) {
     if (user) {
       this.userSignal.set(user);
+      caches.open('auth-cache').then(async cache => {
+        await cache.put('/uid', new Response(user.uid))
+      });
     }
     else{
       this.userSignal.set(undefined);
+
+      caches.open('auth-cache').then(async cache => {
+        await cache.delete('/uid')
+      });
     }
   }
 
@@ -158,7 +165,7 @@ export function getFirebaseAuthErrorMessage(code: string): string {
     case 'auth/popup-closed-by-user':
       return 'You closed the popup before finishing the sign-in';
     case 'auth/invalid-credential':
-      return 'The authentication credential is invalid';
+      return 'The authentication credential is not valid';
     case 'auth/too-many-requests':
       return 'Too many failed login attempts, try again later';
     case 'auth/network-request-failed':

@@ -27,19 +27,24 @@
       <i class="bi bi-thermometer-high"></i>
       <span class="sidebar-text ms-3">Sensors</span>
     </a>
+    <a routerLink="/alerts" title="Alerts" class="list-group-item list-group-item-action bg-dark border-0 py-3 ripple d-flex justify-content-center"
+       [ngClass]="this.router.url == '/alerts' ? 'active' : ''" data-bs-dismiss="offcanvas">
+      <i class="bi bi-bell-fill"></i>
+      <span class="sidebar-text ms-3">Alerts</span>
+    </a>
   </div>
 
   <div class="list-group list-group-flush mx-2 mt-3">
     @if(this.firebaseService.userSignal()) {
       <a routerLink="/account" title="Account" class="list-group-item list-group-item-action bg-dark border-0 py-3 ripple d-flex justify-content-center"
          [ngClass]="this.router.url == '/account' ? 'active' : ''" data-bs-dismiss="offcanvas">
-        <i class="bi bi-gear"></i>
+        <i class="bi bi-person-circle"></i>
         <span class="sidebar-text ms-3">Account</span>
       </a>
     } @else {
       <a routerLink="/login" title="Login" class="list-group-item list-group-item-action bg-dark border-0 py-3 ripple d-flex justify-content-center"
          [ngClass]="this.router.url == '/login' ? 'active' : ''" data-bs-dismiss="offcanvas">
-        <i class="bi bi-gear"></i>
+        <i class="bi bi-box-arrow-in-right"></i>
         <span class="sidebar-text ms-3">Login</span>
       </a>
     }

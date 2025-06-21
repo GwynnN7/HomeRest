@@ -1,7 +1,17 @@
 {
+  "name": "dummy-server",
+  "version": "1.0.0",
+  "description": "Dummy server for Devices API requests",
+  "author": "Gwynn7",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^5.1.0",
-    "fs": "^0.0.1-security"
+    "fs": "^0.0.1-security",
+    "web-push": "^3.6.7"
   }
 }

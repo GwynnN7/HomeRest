@@ -6,6 +6,7 @@ import {NgClass, NgForOf, NgIf} from '@angular/common';
 import {FirebaseService} from '../firebase.service';
 import * as devicesIcons from '../../icons.json'
 import {ToastService} from '../toast.service';
+import {DeviceCallerService} from '../device-caller.service';
 
 @Component({
   selector: 'app-device-editor',
@@ -24,6 +25,7 @@ export class DeviceEditorComponent implements OnInit {
   @Input() category!: string;
 
   firebaseService: FirebaseService = inject(FirebaseService);
+  deviceCaller: DeviceCallerService = inject(DeviceCallerService);
   toastService: ToastService = inject(ToastService);
   activeModal = inject(NgbActiveModal)
 
@@ -35,8 +37,7 @@ export class DeviceEditorComponent implements OnInit {
   deviceForm: FormGroup = new FormGroup({
     name: new FormControl('', [Validators.required]),
     endpoint: new FormControl('', [Validators.required]),
-    type: new FormControl('digital', [Validators.required]),
-    notification: new FormControl(false),
+    type: new FormControl('digital', [Validators.required])
   })
 
   ngOnInit(): void {
@@ -46,7 +47,6 @@ export class DeviceEditorComponent implements OnInit {
           name: this.selectedDevice.name,
           endpoint: this.selectedDevice.endpoint,
           type: this.selectedDevice.type,
-          notification: this.selectedDevice.notification
         }
       );
       this.selectIcon(this.selectedDevice.iconId);
@@ -63,10 +63,15 @@ export class DeviceEditorComponent implements OnInit {
       id: editMode ? this.selectedDevice!.id : crypto.randomUUID(),
       name: this.deviceForm.value.name,
       type: this.deviceForm.value.type,
-      notification: this.deviceForm.value.notification,
       endpoint: this.deviceForm.value.endpoint,
       iconId: this.selectedIconIndex
     };
+
+    if(newDevice.endpoint !== this.selectedDevice?.endpoint && this.selectedDevice !== undefined){
+      this.deviceCaller.subscribeDevice(this.selectedDevice.endpoint, "unsubscribe")
+        .then()
+        .catch();
+    }
 
     this.firebaseService.addDevice(newDevice, this.category, editMode).then( result => {
         if(result) this.activeModal.close();
@@ -82,7 +87,12 @@ export class DeviceEditorComponent implements OnInit {
       return;
     }
     this.firebaseService.deleteDevice(this.selectedDevice!, this.category).then( result => {
-      if(result) this.activeModal.close();
+      if(result) {
+        this.deviceCaller.subscribeDevice(this.selectedDevice!.endpoint, "unsubscribe")
+          .then()
+          .catch();
+        this.activeModal.close();
+      }
       else{
         this.toastService.show("There was an error while deleting the device.");
         this.activeModal.dismiss();

@@ -7,7 +7,7 @@ import { getAuth, provideAuth } from '@angular/fire/auth'
 import { environment } from '../environments/environment';
 import { routes } from './app.routes';
 import {provideHttpClient} from '@angular/common/http';
-import { provideServiceWorker } from '@angular/service-worker';
+import {provideServiceWorker} from '@angular/service-worker';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -16,9 +16,10 @@ export const appConfig: ApplicationConfig = {
     importProvidersFrom(BrowserModule),
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
-    provideFirestore(() => getFirestore()), provideServiceWorker('ngsw-worker.js', {
+    provideFirestore(() => getFirestore()),
+    provideServiceWorker('notification-sw.js', {
       enabled: !isDevMode(),
       registrationStrategy: 'registerWhenStable:30000'
-    }),
+    })
   ]
 };

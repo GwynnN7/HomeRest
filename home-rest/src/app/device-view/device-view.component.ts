@@ -1,12 +1,10 @@
 import {Component, inject, Input, OnDestroy, OnInit} from '@angular/core';
-import {DeviceInfo} from '../device-info';
+import {DeviceInfo, getDeviceFontClass} from '../device-info';
 import {ApiResponse, DeviceCallerService} from '../device-caller.service';
 import {NgClass, NgForOf} from '@angular/common';
 import * as devicesIcons from '../../icons.json'
 import {catchError, interval, of, startWith, Subscription, switchMap} from 'rxjs';
-import {NotificationService} from '../notification.service';
 import {DeviceResponse} from '../device-response';
-import {getDeviceFontClass} from '../toast.service';
 
 @Component({
   selector: 'app-device-view',
@@ -21,7 +19,6 @@ export class DeviceViewComponent implements OnInit, OnDestroy{
   @Input() device!: DeviceInfo;
 
   deviceCaller = inject(DeviceCallerService)
-  notificationService: NotificationService = inject(NotificationService);
   private timer?: Subscription;
 
   iconListOn: string[] = devicesIcons['switch_on'];
@@ -30,7 +27,6 @@ export class DeviceViewComponent implements OnInit, OnDestroy{
   iconListErrors: string[] = devicesIcons['error'];
 
   status: string = "";
-  lastStatus: string = "";
   apiStatus: ApiResponse = ApiResponse.Offline;
 
   ngOnInit(): void {
@@ -46,6 +42,8 @@ export class DeviceViewComponent implements OnInit, OnDestroy{
       .subscribe({
         next: device => this.updateStatus(device)
       });
+
+    //this.deviceCaller.subscribeDevice(this.device.endpoint, this.device.notification);
   }
 
   updateStatus(device: DeviceResponse | null) {
@@ -57,14 +55,6 @@ export class DeviceViewComponent implements OnInit, OnDestroy{
 
     if(device.status && (this.device.type === "digital" && isNaN(parseFloat(device.status))) || (this.device.type === "analog" && !isNaN(parseFloat(device.status)))) {
       this.status = device.status.toLowerCase();
-      if(this.lastStatus !== this.status)
-      {
-        if(this.device.notification && this.lastStatus !== "")
-        {
-          this.notificationService.show(`${device.device} switched ${device.status}`)
-        }
-        this.lastStatus = this.status;
-      }
       this.apiStatus = ApiResponse.Online;
     }
   }

@@ -3,6 +3,10 @@ export interface DeviceInfo {
   name: string;
   endpoint: string;
   type: string;
-  notification: boolean;
   iconId: number;
+}
+
+export function getDeviceFontClass(name: string): string {
+  if (name.length > 10) return 'fs-6';
+  return 'fs-5';
 }

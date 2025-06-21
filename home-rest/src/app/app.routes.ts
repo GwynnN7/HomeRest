@@ -7,6 +7,7 @@ import {authGuard, noAuthGuard, offlineGuard, onlineGuard} from './guards';
 import {OfflineComponent} from './offline/offline.component';
 import {AccountComponent} from './account/account.component';
 import {DashboardComponent} from './dashboard/dashboard.component';
+import {AlertDashboardComponent} from './alert-dashboard/alert-dashboard.component';
 
 export const routes: Routes = [
   {
@@ -43,6 +44,12 @@ export const routes: Routes = [
     path: 'sensors',
     component: SensorDashboardComponent,
     title: 'Sensors',
+    canActivate: [authGuard, onlineGuard],
+  },
+  {
+    path: 'alerts',
+    component: AlertDashboardComponent,
+    title: 'Alerts',
     canActivate: [authGuard, onlineGuard],
   },
   {

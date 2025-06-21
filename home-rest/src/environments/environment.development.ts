@@ -5,6 +5,9 @@ export const environment = {
     projectId: "home-rest-117",
     storageBucket: "home-rest-117.firebasestorage.app",
     messagingSenderId: "153769113123",
-    appId: "1:153769113123:web:829edeccba134fa2d2a396"
+    appId: "1:153769113123:web:829edeccba134fa2d2a396",
   },
+  push:{
+    publicKey: 'BOYLN-L75hyTlEqO1Zg1c7-JcJvCxCQaZTgCOhbExNWtBy7WtDkt2HEuFHexHhUVUCckyXN0sG-sjvWRu6mFiT8'
+  }
 };

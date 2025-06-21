@@ -1,30 +1,30 @@
 import {Component, inject, Input, OnDestroy, OnInit} from '@angular/core';
 import {DeviceInfo, getDeviceFontClass} from '../device-info';
 import {ApiResponse, DeviceCallerService} from '../device-caller.service';
-import * as devicesIcons from '../../icons.json';
 import {NgClass} from '@angular/common';
+import * as devicesIcons from '../../icons.json'
 import {catchError, interval, of, startWith, Subscription, switchMap} from 'rxjs';
+import {DeviceResponse} from '../device-response';
+import {ToastService} from '../toast.service';
 
 @Component({
-  selector: 'app-sensor-view',
+  selector: 'app-alert',
   imports: [
     NgClass
   ],
-  templateUrl: './sensor-view.component.html',
-  styleUrl: './sensor-view.component.css'
+  templateUrl: './alert-view.html',
+  styleUrl: './alert-view.css'
 })
-export class SensorViewComponent implements OnInit, OnDestroy {
-  @Input() sensor!: DeviceInfo;
+export class AlertView implements OnInit, OnDestroy{
+  @Input() alert!: DeviceInfo;
 
   deviceCaller = inject(DeviceCallerService)
+  toastService: ToastService = inject(ToastService);
   private timer?: Subscription;
 
   iconListOn: string[] = devicesIcons['switch_on'];
-  iconListOff: string[] = devicesIcons['switch_off'];
   iconListNeutral: string[] = devicesIcons['neutral'];
   iconListErrors: string[] = devicesIcons['error'];
-  status: string = "";
-  unit: string = "";
 
   apiStatus: ApiResponse = ApiResponse.Offline;
 
@@ -32,32 +32,35 @@ export class SensorViewComponent implements OnInit, OnDestroy {
     this.timer = interval(2000)
       .pipe(
         startWith(0),
-        switchMap(() => this.deviceCaller.getSensor(this.sensor!.endpoint).pipe(
+        switchMap(() => this.deviceCaller.getDevice(this.alert!.endpoint).pipe(
           catchError(_ => {
             return of(null);
           })
         ))
       )
       .subscribe({
-        next: sensor => {
-          this.status = '';
-          this.unit = '';
-          this.apiStatus = ApiResponse.Offline;
-
-          if(!sensor) return;
-          this.apiStatus = ApiResponse.Unknown;
-
-          if(sensor.value && (this.sensor.type === "digital" && isNaN(parseFloat(sensor.value))) || (this.sensor.type === "analog" && !isNaN(parseFloat(sensor.value)))) {
-            this.status = sensor.value.toLowerCase();
-            this.unit = sensor.unit;
-            this.apiStatus = ApiResponse.Online;
-          }
-        }
+        next: device => this.updateStatus(device)
       });
+  }
+
+  updateStatus(device: DeviceResponse | null) {
+    this.apiStatus = device ? ApiResponse.Online : ApiResponse.Offline;
   }
 
   ngOnDestroy(): void {
     this.timer?.unsubscribe();
+  }
+
+  subscribe(sub: boolean, $event: MouseEvent) {
+    const param = sub ? "subscribe" : "unsubscribe";
+    this.deviceCaller.subscribeDevice(this.alert.endpoint, param)
+      .then(_ => {
+        this.toastService.show(`Device successfully ${param}d `, "bg-success");
+       })
+      .catch(_ =>
+      this.toastService.show(`Could not ${param} this device`)
+    );
+    $event.stopPropagation();
   }
 
   protected readonly ApiResponse = ApiResponse;

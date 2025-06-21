@@ -1,7 +1,7 @@
 {
     "devices": [
         {
-            "name": "Lamp",
+            "device": "Lamp",
             "status": "on",
             "actions": [
                 "on",
@@ -10,8 +10,8 @@
             ]
         },
         {
-            "name": "Fan",
-            "status": "0",
+            "device": "Fan",
+            "status": "3",
             "actions": [
                 "0",
                 "1",
@@ -20,7 +20,7 @@
             ]
         },
         {
-            "name": "Computer",
+            "device": "Computer",
             "status": "off",
             "actions": [
                 "on",
@@ -29,7 +29,7 @@
             ]
         },
         {
-            "name": "Heater",
+            "device": "Heater",
             "status": "off",
             "actions": [
                 "on",
@@ -40,27 +40,27 @@
     ],
     "sensors": [
         {
-            "name": "Temperature",
-            "value": "95",
+            "sensor": "Temperature",
+            "value": "110",
             "unit": "°C"
         },
         {
-            "name": "Humidity",
-            "value": "-14",
+            "sensor": "Humidity",
+            "value": "68",
             "unit": "%"
         },
         {
-            "name": "Light",
-            "value": "36",
+            "sensor": "Light",
+            "value": "6",
             "unit": "%"
         },
         {
-            "name": "Motion",
+            "sensor": "Motion",
             "value": "false",
             "unit": ""
         },
         {
-            "name": "Fire",
+            "sensor": "Fire",
             "value": "true",
             "unit": ""
         }

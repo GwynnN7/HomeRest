@@ -1,0 +1,23 @@
+@if(alert != undefined) {
+  <div class="card device-card text-center p-3 d-flex flex-column justify-content-between w-100 h-100">
+    <h3 class="fw-bold mb-1 text-center text-break"
+        [ngClass]="getDeviceFontClass(alert.name)">
+      {{ alert.name }}
+    </h3>
+    <div class="mb-1">
+      <i class="bi" style="font-size: 2.5rem;"
+         [ngClass]='apiStatus === ApiResponse.Online ? (alert.type === "digital" ? iconListOn[alert.iconId] : iconListNeutral[alert.iconId]) + " text-light" : iconListErrors[apiStatus] + " text-danger"'
+      ></i>
+    </div>
+
+    <div class="d-flex justify-content-center gap-2 flex-wrap">
+      <button class="on-off-btn btn btn-outline-success d-flex align-items-center justify-content-center gap-2" (click)="subscribe(true, $event)" [disabled]="apiStatus !== ApiResponse.Online">
+        <i class="bi bi-bell-fill"></i> Sub
+      </button>
+      <button class="on-off-btn btn btn-outline-danger d-flex align-items-center justify-content-center gap-2" (click)="subscribe(false, $event)" [disabled]="apiStatus !== ApiResponse.Online">
+        <i class="bi bi-bell-slash-fill"></i> Unsub
+      </button>
+    </div>
+
+  </div>
+}

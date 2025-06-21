@@ -4,8 +4,8 @@ import {SideBarComponent} from './side-bar/side-bar.component';
 import {NavigationStart, Router, RouterOutlet} from '@angular/router';
 import {NgIf} from '@angular/common';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {NotificationService} from './notification.service';
 import {ToastComponent} from './toast/toast.component';
+import {ToastService} from './toast.service';
 
 @Component({
   selector: 'app-root',
@@ -15,15 +15,17 @@ import {ToastComponent} from './toast/toast.component';
 })
 export class AppComponent implements OnInit {
   firebaseService: FirebaseService = inject(FirebaseService);
-  notificationService: NotificationService = inject(NotificationService)
+
   router: Router = inject(Router);
   modalService: NgbModal = inject(NgbModal);
+  toastService: ToastService = inject(ToastService);
   isOnline = navigator.onLine;
 
   ngOnInit(): void {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationStart) {
         this.modalService.dismissAll();
+        this.toastService.dismiss();
       }
     });
     window.addEventListener('online', () => {
@@ -42,6 +44,16 @@ export class AppComponent implements OnInit {
 
     this.firebaseService.updateUser();
 
-    this.notificationService.requestPermission();
+    this.requestPermission();
+  }
+
+  requestPermission() {
+    if ('Notification' in window) {
+      Notification.requestPermission().then(permission => {
+        if (permission === 'granted') {
+          console.log('Permission granted for notifications.');
+        }
+      });
+    }
   }
 }
