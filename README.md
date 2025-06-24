@@ -1,48 +1,43 @@
 # HomeRest
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli)
-
-## Testing credentials
-
-```
-saw@test.com   Saw2025
-saw@real.com   Saw2025
-```
+This project consists of two parts, the main **Front-End** application built in _Angular_, and a dummy **Back-End** server made in _Node.js_ that simulate the behaviour of some default devices
 
 ## Backend server
 
-To start a local development server, run:
+To run the back-end server, copy the **.env** file in the **dummy-server** folder and run this command
 
 ```bash
-node dummy-server/server.js
+cd dummy-server
+npm run start
 ```
-
+The API will be available at `http://localhost:3000/`
 
 ## Frontend application
 
-To start a local development server, run:
+To run the front-end application, first build the Angular project using this command
 
 ```bash
-ng serve
-```
-
-Once the server is running, open your browser and navigate to `http://localhost:4200/`
-
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
+cd home-rest
+npm run build
 ```
 
 ## PWA
 
-To start the project as PWA, run:
+To test this application as a PWA, the application must be served on an HTTP server using this command
 
 ```bash
-npx serve -p 8080 -s dist/home-rest/browser
+npm run server
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:8080/`
+Once the application is running, navigate to `http://localhost:8080/` 
+
+Since it uses HTTP protocol, the Service Worker will only be active in `http://localhost:8080/`, and not in `http://{device-ip}:8080/`
+
+
+## Testing credentials
+
+The first set of credentials uses dummy devices from the dummy-server, while the second set of credentials uses actual devices through my personal API
+```
+saw@test.com   Saw2025
+saw@real.com   Saw2025
+```
