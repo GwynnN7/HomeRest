@@ -11,7 +11,9 @@
         "data": [
             {
                 "uid": "2mbTGkNf2iXFfKrby0ujvnOX61s2",
-                "endpoints": []
+                "endpoints": [
+                    "real/devices/lamp"
+                ]
             },
             {
                 "uid": "7cfqWjFj8VMy9VFy7Hv2AcNSsKD2",

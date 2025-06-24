@@ -9,7 +9,8 @@
       <i class="bi" style="font-size: 2.5rem;"
          [ngClass]="apiStatus === ApiResponse.Online ? (status === 'true' ? iconListOn[sensor.iconId] + ' text-info' : iconListOff[sensor.iconId] + ' text-secondary') : iconListErrors[apiStatus] + ' text-danger'"
       ></i>
-      } @else {
+      }
+      @else {
         <i class="bi m-1" style="font-size: 2.5rem;"
            [ngClass]="apiStatus === ApiResponse.Online ? iconListNeutral[sensor.iconId] + ' text-info' : iconListErrors[apiStatus] + ' text-danger'"
         ></i>

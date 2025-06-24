@@ -1,38 +1,36 @@
-<div class="container py-5" *ngIf="this.firebaseService.userSignal() as user">
-  <div class="row justify-content-center">
-    <div class="col-12 col-md-8 col-lg-6">
-      <div class="card shadow">
-        <div class="card-body">
-          <h3 class="card-title text-center mb-4">👤 Account Info</h3>
-
-          <form [formGroup]="updateForm!">
-            <div class="mb-3">
-              <label for="email" class="form-label">Email:</label>
-              <input type="email" class="form-control"  id="email" [value]="user.email" disabled>
-            </div>
-
-            <div class="mb-3">
-              <label for="username" class="form-label">Username:</label>
-              <input type="text"  class="form-control" formControlName="username" id="username">
-            </div>
-
-            <div class="row mt-4 mb-2 g-2">
-              <button type="button" class="btn btn-primary w-100" (click)="update()" [disabled]="!updateForm?.valid">Update</button>
-
-              <div class="col-12 col-sm-6">
-                <button class="btn btn-warning w-100" (click)="logout()">
-                  <i class="bi bi-box-arrow-right"></i> Logout
-                </button>
+@if (this.firebaseService.userSignal(); as user) {
+  <div class="container py-5">
+    <div class="row justify-content-center">
+      <div class="col-12 col-md-8 col-lg-6">
+        <div class="card shadow">
+          <div class="card-body">
+            <h3 class="card-title text-center mb-4">👤 Account Info</h3>
+            <form [formGroup]="updateForm!">
+              <div class="mb-3">
+                <label for="email" class="form-label">Email:</label>
+                <input type="email" class="form-control"  id="email" [value]="user.email" disabled>
               </div>
-              <div class="col-12 col-sm-6">
-                <button class="btn btn-danger w-100" (click)="delete()">
-                  <i class="bi bi-trash"></i> Delete
-                </button>
+              <div class="mb-3">
+                <label for="username" class="form-label">Username:</label>
+                <input type="text"  class="form-control" formControlName="username" id="username">
               </div>
-            </div>
-          </form>
+              <div class="row mt-4 mb-2 g-2">
+                <button type="button" class="btn btn-primary w-100" (click)="update()" [disabled]="!updateForm?.valid">Update</button>
+                <div class="col-12 col-sm-6">
+                  <button class="btn btn-warning w-100" (click)="logout()">
+                    <i class="bi bi-box-arrow-right"></i> Logout
+                  </button>
+                </div>
+                <div class="col-12 col-sm-6">
+                  <button class="btn btn-danger w-100" (click)="delete()">
+                    <i class="bi bi-trash"></i> Delete
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
+}

@@ -2,21 +2,19 @@ import {Component, inject, Input, OnInit} from '@angular/core';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import {DeviceInfo} from '../device-info';
-import {NgClass, NgForOf, NgIf} from '@angular/common';
+import { NgClass } from '@angular/common';
 import {FirebaseService} from '../firebase.service';
-import * as devicesIcons from '../../icons.json'
 import {ToastService} from '../toast.service';
 import {DeviceCallerService} from '../device-caller.service';
+import * as devicesIcons from '../../icons.json'
 
 @Component({
   selector: 'app-device-editor',
   imports: [
     FormsModule,
-    NgForOf,
-    NgIf,
     ReactiveFormsModule,
     NgClass
-  ],
+],
   templateUrl: './device-editor.component.html',
   styleUrl: './device-editor.component.css'
 })
@@ -81,8 +79,7 @@ export class DeviceEditorComponent implements OnInit {
   }
 
   deleteDevice(): void {
-    if(!this.selectedDevice)
-    {
+    if(!this.selectedDevice) {
       this.activeModal.dismiss();
       return;
     }

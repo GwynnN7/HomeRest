@@ -16,7 +16,7 @@ let lastNotifyData = undefined
 
 if(process.env.VAPID_PUBLIC_KEY && process.env.VAPID_PRIVATE_KEY){
   webpush.setVapidDetails(
-      "https://home-rest.com/",
+      'mailto:mattcheru03@gmail.com',
       process.env.VAPID_PUBLIC_KEY,
       process.env.VAPID_PRIVATE_KEY
   );

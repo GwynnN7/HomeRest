@@ -1,6 +1,5 @@
 import {Component, inject, OnInit} from '@angular/core';
 import {FirebaseService} from '../firebase.service';
-import {NgForOf, NgIf} from '@angular/common';
 import {DeviceInfo} from '../device-info';
 import {Router} from '@angular/router';
 import {AlertView} from '../alert-view/alert-view';
@@ -8,8 +7,6 @@ import {AlertView} from '../alert-view/alert-view';
 @Component({
   selector: 'app-alert-dashboard',
   imports: [
-    NgForOf,
-    NgIf,
     AlertView
   ],
   templateUrl: './alert-dashboard.component.html',

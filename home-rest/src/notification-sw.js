@@ -35,5 +35,5 @@ async function checkAuth(uid) {
 
   const cache_uid = await response.text();
 
-  return cache_uid === uid;
+  return cache_uid === uid && uid !== undefined;
 }

@@ -1,9 +1,9 @@
 import {Component, inject, Input, OnDestroy, OnInit} from '@angular/core';
 import {DeviceInfo, getDeviceFontClass} from '../device-info';
 import {ApiResponse, DeviceCallerService} from '../device-caller.service';
-import * as devicesIcons from '../../icons.json';
 import {NgClass} from '@angular/common';
 import {catchError, interval, of, startWith, Subscription, switchMap} from 'rxjs';
+import * as devicesIcons from '../../icons.json';
 
 @Component({
   selector: 'app-sensor-view',

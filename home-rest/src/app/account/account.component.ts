@@ -1,7 +1,7 @@
 import {Component, inject, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {FirebaseService} from '../firebase.service';
-import {NgIf} from '@angular/common';
+
 import {
   AbstractControl, AsyncValidatorFn,
   FormControl,
@@ -16,10 +16,9 @@ import {ToastService} from '../toast.service';
 @Component({
   selector: 'app-account',
   imports: [
-    NgIf,
     FormsModule,
     ReactiveFormsModule
-  ],
+],
   templateUrl: './account.component.html',
   styleUrl: './account.component.css'
 })

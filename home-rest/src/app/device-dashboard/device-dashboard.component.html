@@ -1,12 +1,16 @@
-<div class="container my-4 text-center" *ngIf="this.router.url === '/'">
-  <h3><i class="bi bi-lightbulb-fill"></i> Devices</h3>
-</div>
+@if (this.router.url === '/') {
+  <div class="container my-4 text-center">
+    <h3><i class="bi bi-lightbulb-fill"></i> Devices</h3>
+  </div>
+}
 
 <div class="container my-4">
   <div class="row g-3 justify-content-center">
-    <div class="col-12 col-sm-6 col-md-4 col-lg-3" *ngFor="let device of devices">
-      <app-device-view [device]="device" (click)="openEditModal(device)"></app-device-view>
-    </div>
+    @for (device of devices; track device) {
+      <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+        <app-device-view [device]="device" (click)="openEditModal(device)"></app-device-view>
+      </div>
+    }
 
     @if (this.router.url != '/') {
       <div class="col-12 col-sm-6 col-md-4 col-lg-3">

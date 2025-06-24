@@ -15,9 +15,11 @@
 </div>
 
 <div class="container-fluid bg-dark text-white min-vh-100" data-bs-theme="dark">
-  <div *ngIf="!isOnline" class="alert alert-warning">
-    ⚠️ You are offline, connect to internet to load your devices!
-  </div>
+  @if (!isOnline) {
+    <div class="alert alert-warning">
+      ⚠️ You are offline, connect to internet to load your devices!
+    </div>
+  }
   <div class="row">
     <div class="col-md-2 d-none d-md-block px-3 py-0">
       <app-side-bar id="mainSidebar"></app-side-bar>

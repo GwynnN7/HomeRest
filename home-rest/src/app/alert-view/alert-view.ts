@@ -2,10 +2,10 @@ import {Component, inject, Input, OnDestroy, OnInit} from '@angular/core';
 import {DeviceInfo, getDeviceFontClass} from '../device-info';
 import {ApiResponse, DeviceCallerService} from '../device-caller.service';
 import {NgClass} from '@angular/common';
-import * as devicesIcons from '../../icons.json'
 import {catchError, interval, of, startWith, Subscription, switchMap} from 'rxjs';
 import {DeviceResponse} from '../device-response';
 import {ToastService} from '../toast.service';
+import * as devicesIcons from '../../icons.json'
 
 @Component({
   selector: 'app-alert',
@@ -51,7 +51,7 @@ export class AlertView implements OnInit, OnDestroy{
     this.timer?.unsubscribe();
   }
 
-  subscribe(sub: boolean, $event: MouseEvent) {
+  subscribe(sub: boolean, event: MouseEvent) {
     const param = sub ? "subscribe" : "unsubscribe";
     this.deviceCaller.subscribeDevice(this.alert.endpoint, param)
       .then(_ => {
@@ -60,7 +60,7 @@ export class AlertView implements OnInit, OnDestroy{
       .catch(_ =>
       this.toastService.show(`Could not ${param} this device`)
     );
-    $event.stopPropagation();
+    event.stopPropagation();
   }
 
   protected readonly ApiResponse = ApiResponse;

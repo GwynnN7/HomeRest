@@ -6,57 +6,60 @@
       } @else {
         Edit Device
       }</h5>
-    <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss()"></button>
-  </div>
-  <div class="modal-body">
-    <form [formGroup]="deviceForm">
-      <div class="mb-3">
-        <label for="deviceName" class="form-label">Device Name</label>
-        <input type="text" formControlName="name" class="form-control" id="deviceName" name="name">
-      </div>
-      <div class="mb-3">
-        <label for="deviceEndpoint" class="form-label">Endpoint</label>
-        <input type="text" formControlName="endpoint" class="form-control" id="deviceEndpoint" name="endpoint">
-      </div>
-      <div class="mb-3">
-        <div class="btn-group d-flex flex-wrap justify-content-center align-items-center" role="group" aria-label="Type group">
-          <input type="radio" class="btn-check" id="digital" formControlName="type" value="digital" autocomplete="off">
-          <label class="btn btn-outline-primary" for="digital">Digital</label>
+      <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss()"></button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="deviceForm">
+        <div class="mb-3">
+          <label for="deviceName" class="form-label">Device Name</label>
+          <input type="text" formControlName="name" class="form-control" id="deviceName" name="name">
+        </div>
+        <div class="mb-3">
+          <label for="deviceEndpoint" class="form-label">Endpoint</label>
+          <input type="text" formControlName="endpoint" class="form-control" id="deviceEndpoint" name="endpoint">
+        </div>
+        <div class="mb-3">
+          <div class="btn-group d-flex flex-wrap justify-content-center align-items-center" role="group" aria-label="Type group">
+            <input type="radio" class="btn-check" id="digital" formControlName="type" value="digital" autocomplete="off">
+            <label class="btn btn-outline-primary" for="digital">Digital</label>
 
-          <input type="radio" class="btn-check" id="analog" formControlName="type" value="analog" autocomplete="off">
-          <label class="btn btn-outline-primary" for="analog">Analog</label>
+            <input type="radio" class="btn-check" id="analog" formControlName="type" value="analog" autocomplete="off">
+            <label class="btn btn-outline-primary" for="analog">Analog</label>
+          </div>
         </div>
-      </div>
-    </form>
-    @if(this.deviceForm.value.type === "digital") {
-      <div  *ngFor="let iconList of [iconListOn, iconListOff]">
-        <div class="d-flex flex-wrap gap-2 justify-content-center align-items-center">
-          <i style="font-size: 1.75rem; cursor: pointer;"
-             *ngFor="let icon of iconList"
-             (click)="selectIcon(iconList.indexOf(icon))"
-             [class]="'bi ' + icon"
-             [ngClass]="{'border border-light rounded p-1': selectedIconIndex === iconList.indexOf(icon)}"
-          ></i>
-        </div>
-        <hr class="my-3 border-light" *ngIf="iconList === iconListOn"/>
-      </div>
-    }
-    @else{
+      </form>
+      @if(this.deviceForm.value.type === "digital") {
+        @for (iconList of [iconListOn, iconListOff]; track iconList) {
+          <div >
+            <div class="d-flex flex-wrap gap-2 justify-content-center align-items-center">
+              @for (icon of iconList; track icon) {
+                <i style="font-size: 1.75rem; cursor: pointer;"
+                  (click)="selectIcon(iconList.indexOf(icon))"
+                  [class]="'bi ' + icon"
+                  [ngClass]="{'border border-light rounded p-1': selectedIconIndex === iconList.indexOf(icon)}"
+                ></i>
+              }
+            </div>
+            @if (iconList === iconListOn) {
+              <hr class="my-3 border-light"/>
+            }
+          </div>
+        }
+      }
+      @else{
       <div class="text-center flex" >
         <div class="d-flex flex-wrap gap-2 justify-content-center align-items-center">
-          <i style="font-size: 2rem; cursor: pointer;"
-             *ngFor="let icon of iconListNeutral"
-             (click)="selectIcon(iconListNeutral.indexOf(icon))"
-             [class]="'bi ' + icon"
-             [ngClass]="{'border border-light rounded p-1': selectedIconIndex === iconListNeutral.indexOf(icon)}"
-          ></i>
+          @for (icon of iconListNeutral; track icon) {
+            <i style="font-size: 2rem; cursor: pointer;"
+              (click)="selectIcon(iconListNeutral.indexOf(icon))"
+              [class]="'bi ' + icon"
+              [ngClass]="{'border border-light rounded p-1': selectedIconIndex === iconListNeutral.indexOf(icon)}"
+            ></i>
+          }
         </div>
       </div>
     }
-
-
   </div>
-
   <div class="modal-footer">
     <div class="row g-2 justify-content-center">
       <div class="col-auto">
@@ -64,7 +67,9 @@
       </div>
 
       <div class="col-auto">
-        <button type="button" *ngIf="selectedDevice != undefined" class="btn btn-danger w-100" (click)="deleteDevice()">Delete</button>
+        @if (selectedDevice != undefined) {
+          <button type="button" class="btn btn-danger w-100" (click)="deleteDevice()">Delete</button>
+        }
       </div>
       <div class="col-auto">
         <button type="button" class="btn btn-primary w-100" (click)="addDevice()" [disabled]="!deviceForm.valid">
@@ -76,8 +81,5 @@
         </button>
       </div>
     </div>
-
-
-
   </div>
 </div>

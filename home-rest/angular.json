@@ -30,6 +30,11 @@
                 "glob": "notification-sw.js",
                 "input": "src",
                 "output": "/"
+              },
+              {
+                "glob": "icons.json",
+                "input": "src",
+                "output": "/"
               }
             ],
             "styles": [

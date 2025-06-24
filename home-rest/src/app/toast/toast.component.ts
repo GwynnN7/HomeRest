@@ -1,14 +1,13 @@
 import {Component, inject,  OnDestroy, OnInit} from '@angular/core';
-import {NgClass, NgIf} from '@angular/common';
+import { NgClass } from '@angular/common';
 import {ToastService} from '../toast.service';
 import { timer, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-toast',
   imports: [
-    NgIf,
     NgClass
-  ],
+],
   templateUrl: './toast.component.html',
   styleUrl: './toast.component.css'
 })

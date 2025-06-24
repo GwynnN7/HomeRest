@@ -23,7 +23,7 @@ export const noAuthGuard: CanActivateFn = (route, state) => {
   return firebaseService.userObservable.pipe(
     map(user => {
       if (user) {
-        router.navigateByUrl('/devices');
+        router.navigateByUrl('/');
         return false;
       }
       return true;

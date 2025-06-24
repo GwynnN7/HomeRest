@@ -2,12 +2,12 @@
   @if(device.type === "digital"){
     <div class="card device-card text-center p-3 d-flex flex-column justify-content-between w-100 h-100">
       <h3 class="fw-bold mb-1 text-center text-break"
-          [ngClass]="getDeviceFontClass(device.name)">
+        [ngClass]="getDeviceFontClass(device.name)">
         {{ device.name }}
       </h3>
       <div class="mb-1">
         <i class="bi" style="font-size: 2.5rem;"
-           [ngClass]="apiStatus === ApiResponse.Online ? (status === 'on' ? iconListOn[device.iconId] + ' text-warning' : iconListOff[device.iconId] + ' text-secondary') : iconListErrors[apiStatus] + ' text-danger'"
+          [ngClass]="apiStatus === ApiResponse.Online ? (status === 'on' ? iconListOn[device.iconId] + ' text-warning' : iconListOff[device.iconId] + ' text-secondary') : iconListErrors[apiStatus] + ' text-danger'"
         ></i>
       </div>
 
@@ -40,7 +40,8 @@
       </div>
 
       <div class="d-flex justify-content-center gap-2 flex-wrap">
-        <button class="analog-btn btn" *ngFor="let level of ['1', '2', '3', '0']" (click)="callDeviceEndpoint(level, $event)" [disabled]="apiStatus !== ApiResponse.Online"
+        @for (level of ['1', '2', '3', '0']; track level) {
+          <button class="analog-btn btn" (click)="callDeviceEndpoint(level, $event)" [disabled]="apiStatus !== ApiResponse.Online"
           [ngClass]="{
           'btn-outline-light': level === '0',
           'btn-outline-success': level === '1',
@@ -48,9 +49,9 @@
           'btn-outline-danger': level === '3',
           'fw-bold border-1': status === level
           }">{{ level }}
-        </button>
+          </button>
+        }
       </div>
-
     </div>
   }
 }

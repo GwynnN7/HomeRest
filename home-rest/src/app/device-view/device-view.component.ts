@@ -1,17 +1,16 @@
 import {Component, inject, Input, OnDestroy, OnInit} from '@angular/core';
 import {DeviceInfo, getDeviceFontClass} from '../device-info';
 import {ApiResponse, DeviceCallerService} from '../device-caller.service';
-import {NgClass, NgForOf} from '@angular/common';
-import * as devicesIcons from '../../icons.json'
+import { NgClass } from '@angular/common';
 import {catchError, interval, of, startWith, Subscription, switchMap} from 'rxjs';
 import {DeviceResponse} from '../device-response';
+import * as devicesIcons from '../../icons.json'
 
 @Component({
   selector: 'app-device-view',
   imports: [
-    NgForOf,
     NgClass
-  ],
+],
   templateUrl: './device-view.component.html',
   styleUrl: './device-view.component.css'
 })
@@ -42,8 +41,6 @@ export class DeviceViewComponent implements OnInit, OnDestroy{
       .subscribe({
         next: device => this.updateStatus(device)
       });
-
-    //this.deviceCaller.subscribeDevice(this.device.endpoint, this.device.notification);
   }
 
   updateStatus(device: DeviceResponse | null) {
@@ -63,11 +60,11 @@ export class DeviceViewComponent implements OnInit, OnDestroy{
     this.timer?.unsubscribe();
   }
 
-  callDeviceEndpoint(action: string, $event: MouseEvent): void {
+  callDeviceEndpoint(action: string, event: MouseEvent): void {
     this.deviceCaller.postDevice(this.device!.endpoint, action).subscribe(device => {
       this.updateStatus(device);
     })
-    $event.stopPropagation();
+    event.stopPropagation();
   }
 
   protected readonly ApiResponse = ApiResponse;

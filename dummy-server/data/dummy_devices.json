@@ -41,22 +41,22 @@
     "sensors": [
         {
             "sensor": "Temperature",
-            "value": "100",
+            "value": "92",
             "unit": "°C"
         },
         {
             "sensor": "Humidity",
-            "value": "56",
+            "value": "55",
             "unit": "%"
         },
         {
             "sensor": "Light",
-            "value": "12",
+            "value": "8",
             "unit": "%"
         },
         {
             "sensor": "Motion",
-            "value": "false",
+            "value": "true",
             "unit": ""
         },
         {

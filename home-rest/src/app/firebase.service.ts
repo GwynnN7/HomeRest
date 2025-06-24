@@ -33,6 +33,7 @@ export class FirebaseService {
   private updateUserSignal(user: User | null) {
     if (user) {
       this.userSignal.set(user);
+
       caches.open('auth-cache').then(async cache => {
         await cache.put('/uid', new Response(user.uid))
       });

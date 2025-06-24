@@ -2,14 +2,13 @@ import {Component, inject, OnInit} from '@angular/core';
 import {FirebaseService} from './firebase.service';
 import {SideBarComponent} from './side-bar/side-bar.component';
 import {NavigationStart, Router, RouterOutlet} from '@angular/router';
-import {NgIf} from '@angular/common';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {ToastComponent} from './toast/toast.component';
 import {ToastService} from './toast.service';
 
 @Component({
   selector: 'app-root',
-  imports: [SideBarComponent, RouterOutlet, NgIf, ToastComponent],
+  imports: [SideBarComponent, RouterOutlet, ToastComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

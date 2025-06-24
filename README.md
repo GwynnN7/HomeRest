@@ -1,6 +1,6 @@
 # HomeRest
 
-This project consists of two parts, the main **Front-End** application built in _Angular_, and a dummy **Back-End** server made in _Node.js_ that simulate the behaviour of some default devices
+This project consists of two parts, the main **Front-End** application built in _Angular_, and a dummy **Back-End** server made in _Node.js_ that simulates the behaviour of some default devices
 
 ## Backend server
 

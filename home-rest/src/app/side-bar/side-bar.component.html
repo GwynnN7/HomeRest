@@ -2,7 +2,8 @@
   <div class="title-big text-center py-4 border-bottom" style="overflow-x: hidden; white-space: wrap;">
     @if ((this.firebaseService.userSignal()?.displayName ?? '') !== '') {
       <h4 class="fw-bold">{{ this.firebaseService.userSignal()?.displayName }}'s Home</h4>
-    } @else {
+    }
+    @else {
       <h4 class="fw-bold">Home Rest</h4>
     }
   </div>
