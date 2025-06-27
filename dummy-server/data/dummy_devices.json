@@ -41,17 +41,17 @@
     "sensors": [
         {
             "sensor": "Temperature",
-            "value": "97",
+            "value": "30",
             "unit": "°C"
         },
         {
             "sensor": "Humidity",
-            "value": "58",
+            "value": "70",
             "unit": "%"
         },
         {
             "sensor": "Light",
-            "value": "6",
+            "value": "60",
             "unit": "%"
         },
         {
@@ -61,7 +61,7 @@
         },
         {
             "sensor": "Fire",
-            "value": "true",
+            "value": "false",
             "unit": ""
         }
     ]
