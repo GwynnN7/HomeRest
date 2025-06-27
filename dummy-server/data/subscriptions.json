@@ -1,24 +1,2 @@
 {
-    "jqJ0bU_ZzRDJTNQuOQI1GA": {
-        "subscription": {
-            "endpoint": "https://fcm.googleapis.com/fcm/send/e1LshsNb5k8:APA91bE5wVfmdL7Bvr1dTgB4n56KtfncXijqyXDtUm7UXi8sB95PjGl-ANgF1MtNlMY10hHSOfG1U-QYMwgfxBF8yCiQygL0OJXiaq_RpiE3DeKWucz12JULQhQGN6pPjFjkg-hCVv8Y",
-            "expirationTime": null,
-            "keys": {
-                "p256dh": "BEn5ScezEL8Qn8OYV4goDOSpbOVD__ihgRMTAyxeNkV-LhQbMRqxqDkQ1DhzlGzgbtYQuH_y99GIazAwwxjqBRc",
-                "auth": "jqJ0bU_ZzRDJTNQuOQI1GA"
-            }
-        },
-        "data": [
-            {
-                "uid": "2mbTGkNf2iXFfKrby0ujvnOX61s2",
-                "endpoints": [
-                    "real/devices/lamp"
-                ]
-            },
-            {
-                "uid": "7cfqWjFj8VMy9VFy7Hv2AcNSsKD2",
-                "endpoints": []
-            }
-        ]
-    }
 }

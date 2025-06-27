@@ -1,7 +1,6 @@
 import {Component, inject, OnInit} from '@angular/core';
 import {FirebaseService} from '../firebase.service';
 import {DeviceInfo} from '../device-info';
-
 import {SensorViewComponent} from '../sensor-view/sensor-view.component';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {Router} from '@angular/router';
@@ -16,9 +15,10 @@ import {DeviceEditorComponent} from '../device-editor/device-editor.component';
   styleUrl: './sensor-dashboard.component.css'
 })
 export class SensorDashboardComponent implements OnInit{
-  modalService = inject(NgbModal);
+  private modalService = inject(NgbModal);
+  private firebaseService: FirebaseService = inject(FirebaseService);
   router: Router = inject(Router);
-  firebaseService: FirebaseService = inject(FirebaseService);
+
   sensors: DeviceInfo[] = [];
 
   ngOnInit(): void {

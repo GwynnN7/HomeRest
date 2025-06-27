@@ -17,7 +17,7 @@ import * as devicesIcons from '../../icons.json'
 export class DeviceViewComponent implements OnInit, OnDestroy{
   @Input() device!: DeviceInfo;
 
-  deviceCaller = inject(DeviceCallerService)
+  private deviceCaller = inject(DeviceCallerService)
   private timer?: Subscription;
 
   iconListOn: string[] = devicesIcons['switch_on'];

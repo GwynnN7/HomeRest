@@ -23,9 +23,10 @@ import {ToastService} from '../toast.service';
   styleUrl: './account.component.css'
 })
 export class AccountComponent implements OnInit {
-  router: Router = inject(Router);
+  private router: Router = inject(Router);
+  private toastService: ToastService = inject(ToastService);
+
   firebaseService: FirebaseService = inject(FirebaseService);
-  toastService: ToastService = inject(ToastService);
   updateForm: FormGroup | undefined;
 
   usernameValidator = (): AsyncValidatorFn => {

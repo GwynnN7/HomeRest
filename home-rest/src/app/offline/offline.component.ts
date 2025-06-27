@@ -6,6 +6,4 @@ import { Component } from '@angular/core';
   templateUrl: './offline.component.html',
   styleUrl: './offline.component.css'
 })
-export class OfflineComponent {
-
-}
+export class OfflineComponent {}

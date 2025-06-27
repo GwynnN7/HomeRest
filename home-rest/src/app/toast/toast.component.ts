@@ -12,10 +12,11 @@ import { timer, Subscription } from 'rxjs';
   styleUrl: './toast.component.css'
 })
 export class ToastComponent implements OnInit, OnDestroy {
+  private timer?: Subscription;
+  private toastService: ToastService = inject(ToastService);
+
   message = '';
   color = 'bg-danger';
-  timer?: Subscription;
-  toastService: ToastService = inject(ToastService);
 
   ngOnInit(): void {
     this.toastService.toastObservable.subscribe(msg => {

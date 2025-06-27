@@ -222,7 +222,7 @@ app.post('/:type/:category/:name/:action', (req, res) => {
     if(req.params.action === "subscribe"){
       dataIndex = subscriptions[authKey].data.push({uid: uid, endpoints: []}) - 1
     }
-    else return res.sendStatus(200);
+    else return res.sendStatus(204);
   }
 
   const endpointIndex = subscriptions[authKey].data[dataIndex].endpoints.indexOf(endpoint)
@@ -323,7 +323,7 @@ async function sendNotifications() {
 }
 
 setInterval(updateDummySensors, 5000);
-setInterval(sendNotifications, 2000);
+setInterval(sendNotifications, 3000);
 
 app.listen(port, () => {
   console.log(`Devices API server running at http://localhost:${port}`);

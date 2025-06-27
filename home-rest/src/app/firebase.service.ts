@@ -18,8 +18,8 @@ import {DeviceInfo} from './device-info';
   providedIn: 'root'
 })
 export class FirebaseService {
-  firestore = inject(Firestore)
-  auth = inject(Auth);
+  private firestore = inject(Firestore)
+  private auth = inject(Auth);
 
   userObservable = user(this.auth);
   userSignal = signal<User | undefined>(undefined)
@@ -90,7 +90,7 @@ export class FirebaseService {
     return await deleteUser(user!);
   }
 
-  readonly userId = computed(() => this.userSignal()?.uid ?? null);
+  private readonly userId = computed(() => this.userSignal()?.uid ?? null);
 
   getDevices(category: string): Observable<DeviceInfo[]> {
     if(!this.userId) return of([]);
@@ -143,7 +143,7 @@ export class FirebaseService {
   }
 }
 
-export function getFirebaseAuthErrorMessage(code: string): string {
+export function getFirebaseErrorText(code: string): string {
   switch (code) {
     case 'auth/invalid-email':
       return 'The email address is invalid';

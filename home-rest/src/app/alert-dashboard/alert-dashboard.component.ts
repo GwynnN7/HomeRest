@@ -13,8 +13,8 @@ import {AlertView} from '../alert-view/alert-view';
   styleUrl: './alert-dashboard.component.css'
 })
 export class AlertDashboardComponent implements OnInit{
+  private firebaseService: FirebaseService = inject(FirebaseService);
   router: Router = inject(Router);
-  firebaseService: FirebaseService = inject(FirebaseService);
 
   devices: DeviceInfo[] = [];
   sensors: DeviceInfo[] = [];

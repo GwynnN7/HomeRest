@@ -15,9 +15,9 @@ import {Router} from '@angular/router';
   styleUrl: './device-dashboard.component.css'
 })
 export class DeviceDashboardComponent implements OnInit {
-  modalService = inject(NgbModal);
+  private modalService = inject(NgbModal);
+  private firebaseService: FirebaseService = inject(FirebaseService);
   router: Router = inject(Router);
-  firebaseService: FirebaseService = inject(FirebaseService);
 
   devices: DeviceInfo[] = [];
 

@@ -13,11 +13,11 @@ import {ToastService} from './toast.service';
   styleUrl: './app.component.css'
 })
 export class AppComponent implements OnInit {
-  firebaseService: FirebaseService = inject(FirebaseService);
+  private firebaseService: FirebaseService = inject(FirebaseService);
+  private router: Router = inject(Router);
+  private modalService: NgbModal = inject(NgbModal);
+  private toastService: ToastService = inject(ToastService);
 
-  router: Router = inject(Router);
-  modalService: NgbModal = inject(NgbModal);
-  toastService: ToastService = inject(ToastService);
   isOnline = navigator.onLine;
 
   ngOnInit(): void {
@@ -49,8 +49,8 @@ export class AppComponent implements OnInit {
   requestPermission() {
     if ('Notification' in window) {
       Notification.requestPermission().then(permission => {
-        if (permission === 'granted') {
-          console.log('Permission granted for notifications.');
+        if (permission !== 'granted') {
+          console.log('Notifications permission not granted');
         }
       });
     }

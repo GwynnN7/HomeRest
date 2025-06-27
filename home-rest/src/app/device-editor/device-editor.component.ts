@@ -22,9 +22,9 @@ export class DeviceEditorComponent implements OnInit {
   @Input() selectedDevice: DeviceInfo | undefined;
   @Input() category!: string;
 
-  firebaseService: FirebaseService = inject(FirebaseService);
-  deviceCaller: DeviceCallerService = inject(DeviceCallerService);
-  toastService: ToastService = inject(ToastService);
+  private firebaseService: FirebaseService = inject(FirebaseService);
+  private deviceCaller: DeviceCallerService = inject(DeviceCallerService);
+  private toastService: ToastService = inject(ToastService);
   activeModal = inject(NgbActiveModal)
 
   iconListOn: string[] = devicesIcons['switch_on'];
